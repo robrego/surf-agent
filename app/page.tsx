@@ -38,7 +38,7 @@ export default async function Home() {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
-      <div style={{ maxWidth: "720px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem)" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 6rem)" }}>
 
         <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)" }}>
           <div>
