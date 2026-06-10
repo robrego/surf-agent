@@ -47,7 +47,7 @@ export default function FeedbackForm({
   }
 
   const labelStyle = {
-    fontFamily: "var(--font-mono)",
+    fontFamily: "var(--font-body)",
     fontSize: "0.8rem",
     color: "var(--muted)",
     letterSpacing: "0.15em",
@@ -74,12 +74,11 @@ export default function FeedbackForm({
   return (
     <section style={sectionStyle}>
       <p style={{
-        fontFamily: "var(--font-display)",
+        fontFamily: "var(--font-body)",
         fontSize: "1.25rem",
         fontWeight: 600,
         color: "var(--text)",
         marginBottom: "1.5rem",
-        letterSpacing: "0.01em",
       }}>
         How was the call?
       </p>
@@ -121,9 +120,8 @@ export default function FeedbackForm({
             border: "1px solid var(--border)",
             background: "var(--surface)",
             color: actualSpot ? "var(--text)" : "var(--muted)",
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.8rem",
-            letterSpacing: "0.04em",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.9rem",
             outline: "none",
             appearance: "none" as const,
             WebkitAppearance: "none" as const,
@@ -150,9 +148,8 @@ export default function FeedbackForm({
             border: "1px solid var(--border)",
             background: "var(--surface)",
             color: "var(--text)",
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.8rem",
-            letterSpacing: "0.04em",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.9rem",
             outline: "none",
           }}
         />
@@ -163,9 +160,9 @@ export default function FeedbackForm({
         disabled={!rating}
         style={{
           fontFamily: "var(--font-mono)",
-          fontSize: "0.85rem",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase" as const,
+          fontFamily: "var(--font-body)",
+          fontSize: "0.9rem",
+          fontWeight: 500,
           padding: "0.7rem 1.5rem",
           border: "1px solid var(--accent)",
           background: "transparent",

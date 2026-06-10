@@ -10,6 +10,7 @@
   --go: #059669;
   --font-display: var(--font-syne);
   --font-mono: var(--font-dm-mono);
+  --font-body: var(--font-hanken);
 }
 
 @theme inline {
