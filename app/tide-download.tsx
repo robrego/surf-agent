@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const WINDOW_OPTIONS = [1, 1.5, 2, 2.5, 3]
 const DURATION_OPTIONS = [
@@ -19,17 +19,16 @@ export default function TideDownload() {
 
   const href = `/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
 
-  const webcalUrl = typeof window !== "undefined"
-    ? `webcal://${window.location.host}/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
-    : ""
+  const [webcalUrl, setWebcalUrl] = useState("")
+  const [googleCalUrl, setGoogleCalUrl] = useState("")
+  const [outlookUrl, setOutlookUrl] = useState("")
 
-  const googleCalUrl = webcalUrl
-    ? `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcalUrl)}`
-    : ""
-
-  const outlookUrl = webcalUrl
-    ? `https://outlook.live.com/calendar/0/addfromweb?url=${encodeURIComponent(webcalUrl)}`
-    : ""
+  useEffect(() => {
+    const wc = `webcal://${window.location.host}/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
+    setWebcalUrl(wc)
+    setGoogleCalUrl(`https://calendar.google.com/calendar/r?cid=${encodeURIComponent(wc)}`)
+    setOutlookUrl(`https://outlook.live.com/calendar/0/addfromweb?url=${encodeURIComponent(wc)}`)
+  }, [durationDays, windowHours])
 
   const fetchPreview = async () => {
     setPreviewLoading(true)
@@ -202,7 +201,10 @@ export default function TideDownload() {
 
           {/* Outlook */}
           <a href={outlookUrl} target="_blank" rel="noopener noreferrer" style={calBtnStyle("#fff", "#0078d4", "1px solid #d0e4f7")}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="#0078d4"><path d="M24 7.387v13.276L17.28 15.3zM0 7.387l6.72 5.363L0 20.663zM22.5 6H14v7.663L8.023 9.24 1.5 6h21zM13 14.65v2.713L8.023 13.9 13 14.65zM14 14.65l5 .25-4.977 3.463V14.65z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 6.5C2 5.4 2.9 4.5 4 4.5h16c1.1 0 2 .9 2 2v11c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-11z" fill="#0078d4"/>
+              <path d="M2 6.5l10 7 10-7" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
             Outlook
           </a>
 
