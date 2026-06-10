@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@neaps/tide-database": "^0.7.20260601",
+    "@neaps/tide-predictor": "^0.9.0",
     "@types/leaflet": "^1.9.21",
     "leaflet": "^1.9.4",
     "next": "^15.5.19",

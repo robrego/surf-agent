@@ -1,6 +1,7 @@
 import { runAgent } from "@/lib/agent"
 import FeedbackForm from "./feedback-form"
 import DirectionDiagram from "./direction-diagram"
+import TideDownload from "./tide-download"
 export const dynamic = "force-dynamic"
 
 function formatValue(val: string) {
@@ -166,6 +167,8 @@ export default async function Home() {
             }}>
               Runner-up — {brief.runner_up}
             </p>
+
+            <TideDownload />
 
             <FeedbackForm
               recommendedSpot={brief.spot}
