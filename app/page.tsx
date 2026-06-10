@@ -185,7 +185,6 @@ export default async function Home() {
         <footer style={{
           paddingTop: "2.5rem",
           marginTop: "2.5rem",
-          borderTop: "1px solid var(--border)",
         }}>
           <p style={{
             fontFamily: "var(--font-mono)",
