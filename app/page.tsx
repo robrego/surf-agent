@@ -6,7 +6,7 @@ function formatValue(val: string) {
   return val.split(/([\d.]+)/g).map((part, i) =>
     /^[\d.]+$/.test(part)
       ? <strong key={i} style={{ fontWeight: 600 }}>{part}</strong>
-      : <span key={i}>{part}</span>
+      : <span key={i} style={{ fontSize: "0.8em", opacity: 0.7 }}>{part}</span>
   )
 }
 
