@@ -12,6 +12,8 @@ const DURATION_OPTIONS = [
 export default function TideDownload() {
   const [windowHours, setWindowHours] = useState(2)
   const [durationDays, setDurationDays] = useState(7)
+  const [showGoogleTip, setShowGoogleTip] = useState(false)
+  const [showTeamsTip, setShowTeamsTip] = useState(false)
 
   const href = `/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
 
@@ -122,14 +124,62 @@ export default function TideDownload() {
           Download Your "Busy" Schedule
         </a>
       </div>
-      <p style={{ marginTop: "0.75rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)", display: "flex", alignItems: "center", gap: "1rem" }}>
-        <span style={{ cursor: "help", borderBottom: "1px dotted var(--muted)" }} title="Settings > Import & Export > Import">
-          Google Calendar
-        </span>
-        <span style={{ cursor: "help", borderBottom: "1px dotted var(--muted)" }} title="Calendar > ... > Import events">
-          Microsoft Teams
-        </span>
-      </p>
+      <div style={{ marginTop: "0.75rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ position: "relative" }}>
+          <span 
+            onClick={() => setShowGoogleTip(!showGoogleTip)}
+            onMouseEnter={() => setShowGoogleTip(true)}
+            onMouseLeave={() => setShowGoogleTip(false)}
+            style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
+          >
+            Google Calendar
+          </span>
+          {showGoogleTip && (
+            <div style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              marginTop: "0.5rem",
+              background: "var(--text)",
+              color: "var(--bg)",
+              padding: "0.5rem 0.75rem",
+              borderRadius: "4px",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+              zIndex: 1000,
+            }}>
+              Settings &gt; Import &amp; Export &gt; Import
+            </div>
+          )}
+        </div>
+        <div style={{ position: "relative" }}>
+          <span 
+            onClick={() => setShowTeamsTip(!showTeamsTip)}
+            onMouseEnter={() => setShowTeamsTip(true)}
+            onMouseLeave={() => setShowTeamsTip(false)}
+            style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
+          >
+            Microsoft Teams
+          </span>
+          {showTeamsTip && (
+            <div style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              marginTop: "0.5rem",
+              background: "var(--text)",
+              color: "var(--bg)",
+              padding: "0.5rem 0.75rem",
+              borderRadius: "4px",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+              zIndex: 1000,
+            }}>
+              Calendar app &gt; Import events &gt; select file
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
