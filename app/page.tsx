@@ -1,6 +1,23 @@
+import React from "react"
 import { runAgent } from "@/lib/agent"
 import FeedbackForm from "./feedback-form"
 export const dynamic = "force-dynamic"
+
+function formatValue(val: string): React.ReactNode[] {
+  const parts = val.split(/([\d.]+(?:km\/h|mph|m\/s|ft|m|s))/g)
+  return parts.map((part, i) => {
+    const m = part.match(/^([\d.]+)(km\/h|mph|m\/s|ft|m|s)$/)
+    if (m) {
+      return (
+        <span key={i} style={{ whiteSpace: "nowrap" }}>
+          <span style={{ fontWeight: 600 }}>{m[1]}</span>
+          <span style={{ fontSize: "0.78em", opacity: 0.55, marginLeft: "0.05em" }}>{m[2]}</span>
+        </span>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
 
 export default async function Home() {
   let brief: any = null
@@ -102,15 +119,18 @@ export default async function Home() {
               borderTop: "1px solid var(--border)",
               paddingTop: "1.75rem",
             }}>
-              <p style={{
-                fontSize: "clamp(1.05rem, 2.5vw, 1.25rem)",
-                lineHeight: 1.7,
-                color: "var(--text)",
-                opacity: 0.75,
-                maxWidth: "560px",
-              }}>
-                {brief.brief}
-              </p>
+              {(brief.brief ?? "").split(/\.\s+/).map((sentence: string, i: number, arr: string[]) => (
+                <p key={i} style={{
+                  fontSize: "clamp(1.05rem, 2.5vw, 1.2rem)",
+                  lineHeight: 1.7,
+                  color: "var(--text)",
+                  opacity: 0.75,
+                  maxWidth: "560px",
+                  marginBottom: i < arr.length - 1 ? "0.75rem" : 0,
+                }}>
+                  {sentence}{i < arr.length - 1 ? "." : ""}
+                </p>
+              ))}
             </section>
 
             <section style={{
@@ -118,32 +138,39 @@ export default async function Home() {
               borderTop: "1px solid var(--border)",
               paddingTop: "1.75rem",
             }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "clamp(1rem, 3vw, 2rem)" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {[
                   { label: "Swell", value: brief.conditions_summary?.swell ?? "--" },
                   { label: "Wind", value: brief.conditions_summary?.wind ?? "--" },
                   { label: "Window", value: brief.conditions_summary?.best_window ?? "--" },
                 ].map(({ label, value }) => (
-                  <div key={label}>
-                    <p style={{
+                  <div key={label} style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: "1.25rem",
+                    background: "#fff",
+                    border: "1px solid var(--border)",
+                    padding: "0.875rem 1.25rem",
+                  }}>
+                    <span style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: "clamp(0.85rem, 2vw, 1.05rem)",
-                      fontWeight: 400,
-                      color: "var(--text)",
-                      marginBottom: "0.5rem",
-                      lineHeight: 1.4,
-                    }}>
-                      {value}
-                    </p>
-                    <p style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.8rem",
+                      fontSize: "0.75rem",
                       color: "var(--muted)",
-                      letterSpacing: "0.1em",
                       textTransform: "uppercase",
+                      letterSpacing: "0.12em",
+                      minWidth: "4rem",
+                      flexShrink: 0,
                     }}>
                       {label}
-                    </p>
+                    </span>
+                    <span style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "1rem",
+                      color: "var(--text)",
+                      lineHeight: 1.5,
+                    }}>
+                      {formatValue(value)}
+                    </span>
                   </div>
                 ))}
               </div>
