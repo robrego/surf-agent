@@ -107,6 +107,37 @@ export const LOCATIONS: Location[] = [
       { name: "Zarautz", facing: 0, swellDirMin: 320, swellDirMax: 50, swellMin: 0.8, swellMax: 3.0, offshoreWindMin: 120, offshoreWindMax: 220, periodMin: 9, tide: "all tides", notes: "Long beach. Consistent. S wind offshore. Multiple peaks. Good surf town vibe." },
       { name: "Orio", facing: 355, swellDirMin: 310, swellDirMax: 40, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 110, offshoreWindMax: 200, periodMin: 8, tide: "all tides", notes: "River mouth break east of Zarautz. Sandbar. S/SE offshore." },
       { name: "Zumaia", facing: 340, swellDirMin: 300, swellDirMax: 30, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 110, offshoreWindMax: 220, periodMin: 9, tide: "mid to high", notes: "Beach and reef. Flysch cliffs backdrop. Can be powerful. S offshore." },
+      { name: "Getaria", facing: 350, swellDirMin: 310, swellDirMax: 40, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 120, offshoreWindMax: 200, periodMin: 8, tide: "all tides", notes: "Small fishing village. Right point on W side of cape. Sheltered on big days." },
+    ],
+  },
+
+  {
+    id: "somo",
+    name: "Somo",
+    country: "ES",
+    lat: 43.46, lng: -3.61,
+    mapCenter: [43.46, -3.61],
+    mapZoom: 12,
+    spots: [
+      { name: "Somo", facing: 350, swellDirMin: 310, swellDirMax: 40, swellMin: 0.8, swellMax: 3.0, offshoreWindMin: 120, offshoreWindMax: 220, periodMin: 9, tide: "all tides", notes: "Long sandy beach across the bay from Santander. Very consistent. S wind offshore. All levels." },
+      { name: "Loredo", facing: 340, swellDirMin: 300, swellDirMax: 30, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 130, offshoreWindMax: 220, periodMin: 8, tide: "all tides", notes: "Next beach east. Less crowded than Somo. Similar conditions." },
+      { name: "Langre", facing: 345, swellDirMin: 310, swellDirMax: 40, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 130, offshoreWindMax: 210, periodMin: 9, tide: "mid to high", notes: "Cliffside beach. Harder to access, far fewer people. Powerful peaks." },
+      { name: "Galizano", facing: 330, swellDirMin: 290, swellDirMax: 20, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 140, offshoreWindMax: 220, periodMin: 8, tide: "all tides", notes: "Small cove. Works best on solid NW swell with S offshore." },
+    ],
+  },
+
+  {
+    id: "elpalmar",
+    name: "El Palmar",
+    country: "ES",
+    lat: 36.17, lng: -6.05,
+    mapCenter: [36.17, -6.05],
+    mapZoom: 12,
+    spots: [
+      { name: "El Palmar", facing: 235, swellDirMin: 200, swellDirMax: 270, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 30, offshoreWindMax: 100, periodMin: 9, tide: "all tides", notes: "Consistent Andalusian beach. E/NE offshore. Multiple peaks. Warm water. Busy in summer." },
+      { name: "El Cabo", facing: 220, swellDirMin: 190, swellDirMax: 260, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 20, offshoreWindMax: 90, periodMin: 9, tide: "low to mid", notes: "Cape end of the beach. More punch than the middle. NE offshore." },
+      { name: "Conil", facing: 225, swellDirMin: 200, swellDirMax: 265, swellMin: 0.8, swellMax: 2.0, offshoreWindMin: 30, offshoreWindMax: 100, periodMin: 8, tide: "all tides", notes: "Town beach north of El Palmar. Sheltered cove. Gentler. Good for beginners." },
+      { name: "Zahara de los Atunes", facing: 210, swellDirMin: 180, swellDirMax: 250, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 20, offshoreWindMax: 80, periodMin: 9, tide: "mid to high", notes: "Long exposed beach south towards Tarifa. Can be very windy. Levante kills it, Poniente is offshore." },
     ],
   },
 
@@ -152,6 +183,22 @@ export const LOCATIONS: Location[] = [
       { name: "Lacanau Ocean", facing: 272, swellDirMin: 255, swellDirMax: 305, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "Classic French beach break. E offshore. Pro contest site. Multiple peaks." },
       { name: "Les Grands Crohots", facing: 270, swellDirMin: 255, swellDirMax: 300, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "South of Lacanau. Sandbanks shift. Less crowded. E offshore." },
       { name: "Le Porge", facing: 272, swellDirMin: 255, swellDirMax: 300, swellMin: 0.8, swellMax: 2.0, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 8, tide: "all tides", notes: "Exposed beach, no facilities. Long drive but worth it for solitude." },
+      { name: "Le Gurp", facing: 275, swellDirMin: 255, swellDirMax: 305, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 8, tide: "all tides", notes: "Northernmost Médoc beach. Very exposed. Almost never crowded." },
+    ],
+  },
+
+  {
+    id: "guethary",
+    name: "Guéthary",
+    country: "FR",
+    lat: 43.44, lng: -1.61,
+    mapCenter: [43.44, -1.61],
+    mapZoom: 13,
+    spots: [
+      { name: "Parlementia", facing: 255, swellDirMin: 235, swellDirMax: 285, swellMin: 1.5, swellMax: 5.0, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 12, tide: "mid to high", notes: "World-class reef. Long powerful rights. Needs real swell. NE offshore. Not for beginners." },
+      { name: "Cenitz", facing: 250, swellDirMin: 230, swellDirMax: 280, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 50, offshoreWindMax: 120, periodMin: 10, tide: "all tides", notes: "Rocky point between Guéthary and St-Jean. Quality right walls. Less crowded than Biarritz." },
+      { name: "Avalanche", facing: 260, swellDirMin: 240, swellDirMax: 290, swellMin: 2.0, swellMax: 6.0, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 14, tide: "mid", notes: "Big wave spot next to Parlementia. Only breaks on XXL swells. Heavy." },
+      { name: "Haitza", facing: 258, swellDirMin: 238, swellDirMax: 285, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 50, offshoreWindMax: 120, periodMin: 10, tide: "low to mid", notes: "Reef break below the village. Short but punchy lefts. ENE offshore." },
     ],
   },
 ]

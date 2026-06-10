@@ -145,9 +145,12 @@ export async function GET(request: Request) {
     sagres:     { lat: 37.01, lng: -8.94 },
     mundaka:    { lat: 43.41, lng: -2.70 },
     zarautz:    { lat: 43.29, lng: -2.17 },
+    somo:       { lat: 43.46, lng: -3.61 },
+    elpalmar:   { lat: 36.17, lng: -6.05 },
     hossegor:   { lat: 43.67, lng: -1.43 },
     biarritz:   { lat: 43.48, lng: -1.56 },
     lacanau:    { lat: 45.00, lng: -1.20 },
+    guethary:   { lat: 43.44, lng: -1.61 },
   }
 
   const coords = locations[location.toLowerCase()] ?? locations.peniche
