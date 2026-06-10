@@ -161,7 +161,6 @@ export default function FeedbackForm({
         onClick={submit}
         disabled={!rating}
         style={{
-          fontFamily: "var(--font-mono)",
           fontFamily: "var(--font-body)",
           fontSize: "0.9rem",
           fontWeight: 500,

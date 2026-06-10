@@ -116,7 +116,7 @@ export default async function Home() {
                   lineHeight: 1.7,
                   color: "var(--text)",
                   opacity: 0.75,
-                  maxWidth: "560px",
+                  maxWidth: "720px",
                   marginBottom: i < arr.length - 1 ? "0.75rem" : 0,
                 }}>
                   {sentence}{i < arr.length - 1 ? "." : ""}
