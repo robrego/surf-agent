@@ -351,17 +351,17 @@ export async function runAgent() {
   // 6. LLM writes the brief (doesn't decide the spot)
   const prompt = buildPrompt(viable, eliminated, condSummary, feedback)
 
-  const apiKey = process.env.GROQ_API_KEY
-  if (!apiKey) throw new Error("GROQ_API_KEY not set")
+  const apiKey = process.env.CEREBRAS_API_KEY
+  if (!apiKey) throw new Error("CEREBRAS_API_KEY not set")
 
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const res = await fetch("https://api.cerebras.ai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
+      model: "llama-3.3-70b",
       max_tokens: 800,
       temperature: 0.3,
       messages: [{ role: "user", content: prompt }],
