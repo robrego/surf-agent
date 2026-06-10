@@ -40,7 +40,7 @@ export default async function Home() {
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
       <div style={{ maxWidth: "720px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem)" }}>
 
-        <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)" }}>
           <div>
             <p style={{
               fontFamily: "var(--font-mono)",
@@ -62,15 +62,6 @@ export default async function Home() {
             }}>
               Peniche Surf Agent
             </h1>
-          </div>
-          <div style={{
-            width: "8px",
-            height: "8px",
-            borderRadius: "50%",
-            background: "var(--go)",
-            marginTop: "0.4rem",
-            boxShadow: "0 0 12px var(--go)",
-          }} />
         </header>
 
         {error ? (
@@ -80,7 +71,7 @@ export default async function Home() {
             <section style={{ marginBottom: "clamp(2rem, 5vw, 4rem)" }}>
               <h2 style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(3.5rem, 10vw, 7rem)",
+                fontSize: "clamp(2.5rem, 7vw, 4.5rem)",
                 fontWeight: 800,
                 lineHeight: 0.88,
                 letterSpacing: "-0.03em",
@@ -121,7 +112,7 @@ export default async function Home() {
             }}>
               {(brief.brief ?? "").split(/\.\s+/).map((sentence: string, i: number, arr: string[]) => (
                 <p key={i} style={{
-                  fontSize: "clamp(1.05rem, 2.5vw, 1.2rem)",
+                  fontSize: "clamp(0.95rem, 2vw, 1.05rem)",
                   lineHeight: 1.7,
                   color: "var(--text)",
                   opacity: 0.75,
