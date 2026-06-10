@@ -112,7 +112,7 @@ export default async function Home() {
               {(brief.brief ?? "").split(/\.\s+/).map((sentence: string, i: number, arr: string[]) => (
                 <p key={i} style={{
                   fontFamily: "var(--font-body)",
-                  fontSize: "clamp(0.95rem, 2vw, 1.05rem)",
+                  fontSize: "clamp(1.05rem, 2.5vw, 1.15rem)",
                   lineHeight: 1.7,
                   color: "var(--text)",
                   opacity: 0.75,
@@ -153,7 +153,7 @@ export default async function Home() {
                       {label}
                     </span>
                     <span style={{
-                      fontFamily: "var(--font-mono)",
+                      fontFamily: "var(--font-body)",
                       fontSize: "1rem",
                       color: "var(--text)",
                       lineHeight: 1.5,

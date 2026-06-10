@@ -42,8 +42,10 @@ export default function FeedbackForm({
   }
 
   const sectionStyle = {
-    borderTop: "1px solid var(--border)",
-    paddingTop: "1.75rem",
+    background: "var(--surface)",
+    border: "1px solid var(--border)",
+    padding: "1.75rem 1.5rem",
+    marginTop: "clamp(1.5rem, 4vw, 3rem)",
   }
 
   const labelStyle = {
