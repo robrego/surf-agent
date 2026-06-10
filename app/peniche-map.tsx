@@ -2,7 +2,6 @@
 import { MapContainer, TileLayer } from "react-leaflet"
 
 const SIZE = 180
-const PENICHE: [number, number] = [39.355, -9.383]
 
 const COMPASS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
 const bearing = (d: number) => COMPASS[Math.round(((d % 360) + 360) / 22.5) % 16]
@@ -34,10 +33,14 @@ function arrow(cx: number, cy: number, deg: number) {
 export default function PenicheMap({
   windDir,
   swellDir,
+  mapCenter,
+  mapZoom,
 }: {
   windDir: number
   swellDir: number
   spotFacing: number | null
+  mapCenter: [number, number]
+  mapZoom: number
 }) {
   const cx = SIZE / 2, cy = SIZE / 2
   const swell = arrow(cx, cy, swellDir)
@@ -56,8 +59,8 @@ export default function PenicheMap({
         border: "none",
       }}>
         <MapContainer
-          center={PENICHE}
-          zoom={10}
+          center={mapCenter}
+          zoom={mapZoom}
           style={{ width: SIZE, height: SIZE }}
           zoomControl={false}
           dragging={false}

@@ -1,15 +1,13 @@
-import { SPOTS, type SpotProfile } from "./spots"
+import type { SpotProfile } from "./spots"
+import { getLocation } from "./locations"
 import { getSessions, buildFeedbackContext } from "./feedback"
-
-const PENICHE_LAT = 39.36
-const PENICHE_LNG = -9.38
 
 // ---- DATA FETCHING ----
 
-export async function fetchMarineData() {
+export async function fetchMarineData(lat: number, lng: number) {
   const url = new URL("https://marine-api.open-meteo.com/v1/marine")
-  url.searchParams.set("latitude", String(PENICHE_LAT))
-  url.searchParams.set("longitude", String(PENICHE_LNG))
+  url.searchParams.set("latitude", String(lat))
+  url.searchParams.set("longitude", String(lng))
   url.searchParams.set(
     "hourly",
     "swell_wave_height,swell_wave_direction,swell_wave_period,wave_height,wave_direction,wave_period"
@@ -21,12 +19,12 @@ export async function fetchMarineData() {
   return res.json()
 }
 
-export async function fetchWeatherData() {
+export async function fetchWeatherData(lat: number, lng: number) {
   const url = new URL("https://api.open-meteo.com/v1/forecast")
-  url.searchParams.set("latitude", String(PENICHE_LAT))
-  url.searchParams.set("longitude", String(PENICHE_LNG))
+  url.searchParams.set("latitude", String(lat))
+  url.searchParams.set("longitude", String(lng))
   url.searchParams.set("hourly", "wind_speed_10m,wind_direction_10m,wind_gusts_10m")
-  url.searchParams.set("timezone", "Europe/Lisbon")
+  url.searchParams.set("timezone", "auto")
   url.searchParams.set("forecast_days", "2")
   const res = await fetch(url.toString())
   if (!res.ok) throw new Error(`Weather API error: ${res.status}`)
@@ -308,11 +306,13 @@ Respond ONLY with valid JSON, no markdown, no backticks:
 
 // ---- MAIN AGENT ----
 
-export async function runAgent() {
+export async function runAgent(locationId?: string) {
+  const location = getLocation(locationId)
+
   // 1. Fetch data
   const [marine, weather] = await Promise.all([
-    fetchMarineData(),
-    fetchWeatherData(),
+    fetchMarineData(location.lat, location.lng),
+    fetchWeatherData(location.lat, location.lng),
   ])
 
   // 2. Parse
@@ -320,7 +320,7 @@ export async function runAgent() {
   const daylight = getDaylightHours(allHours)
 
   // 3. Score every spot (code does the geometry)
-  const scores = SPOTS.map((spot) => scoreSpot(spot, daylight))
+  const scores = location.spots.map((spot) => scoreSpot(spot, daylight))
   scores.sort((a, b) => b.score - a.score)
 
   const viable = scores.filter((s) => !s.eliminated)
@@ -361,39 +361,43 @@ export async function runAgent() {
   const apiKey = process.env.CEREBRAS_API_KEY
   if (!apiKey) throw new Error("CEREBRAS_API_KEY not set")
 
-  const res = await fetch("https://api.cerebras.ai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-oss-120b",
-      max_tokens: 800,
-      temperature: 0.3,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  })
+  const MODELS = ["gpt-oss-120b", "zai-glm-4.7"]
+  const body = { max_tokens: 800, temperature: 0.3, messages: [{ role: "user", content: prompt }] }
 
-  if (!res.ok) {
-    const err = await res.text()
-    throw new Error(`Cerebras API error ${res.status}: ${err}`)
+  let lastErr = ""
+  let text = ""
+  outer: for (const model of MODELS) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      if (attempt > 0) await new Promise(r => setTimeout(r, attempt * 1500))
+      const res = await fetch("https://api.cerebras.ai/v1/chat/completions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+        body: JSON.stringify({ ...body, model }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        text = (data.choices?.[0]?.message?.content ?? "").replace(/```json|```/g, "").trim()
+        break outer
+      }
+      lastErr = await res.text()
+      if (res.status !== 429) break  // non-rate-limit error, skip retries
+    }
   }
 
-  const data = await res.json()
-  const text = (data.choices?.[0]?.message?.content ?? "")
-    .replace(/```json|```/g, "")
-    .trim()
+  if (!text) throw new Error(`Cerebras unavailable: ${lastErr}`)
 
   const result = JSON.parse(text)
 
-  const topSpot = SPOTS.find((s) => s.name === result.spot)
+  const topSpot = location.spots.find((s) => s.name === result.spot)
 
   return {
     ...result,
     windDir: Math.round(avgWindDir),
     swellDir: Math.round(avgSwellDir),
     spotFacing: topSpot?.facing ?? null,
+    mapCenter: location.mapCenter,
+    mapZoom: location.mapZoom,
+    locationName: location.name,
     _debug: {
       viable: viable.map((s) => ({ name: s.name, score: s.score, wind: s.windStatus })),
       eliminated: eliminated.map((s) => ({ name: s.name, reason: s.eliminationReason })),

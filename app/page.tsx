@@ -1,7 +1,9 @@
 import { runAgent } from "@/lib/agent"
+import { LOCATIONS, getLocation } from "@/lib/locations"
 import FeedbackForm from "./feedback-form"
 import DirectionDiagram from "./direction-diagram"
 import TideDownload from "./tide-download"
+import LocationPicker from "./location-picker"
 export const dynamic = "force-dynamic"
 
 function formatValue(val: string) {
@@ -12,12 +14,18 @@ function formatValue(val: string) {
   )
 }
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ loc?: string }>
+}) {
+  const { loc } = await searchParams
+  const location = getLocation(loc)
   let brief: any = null
   let error: string | null = null
 
   try {
-    brief = await runAgent()
+    brief = await runAgent(location.id)
   } catch (e) {
     error = e instanceof Error ? e.message : "Unknown error"
   }
@@ -27,18 +35,18 @@ export default async function Home() {
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 5rem)" }}>
 
         <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)" }}>
-          <div>
-            <h1 style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              color: "var(--muted)",
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-            }}>
-              Peniche Surf Check
-            </h1>
-          </div>
+          <h1 style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            color: "var(--muted)",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            marginBottom: "1rem",
+          }}>
+            Surf Check
+          </h1>
+          <LocationPicker current={location.id} />
         </header>
 
         {error ? (
@@ -113,6 +121,8 @@ export default async function Home() {
                   windDir={brief.windDir}
                   swellDir={brief.swellDir}
                   spotFacing={brief.spotFacing}
+                  mapCenter={brief.mapCenter ?? location.mapCenter}
+                  mapZoom={brief.mapZoom ?? location.mapZoom}
                 />
               )}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1, minWidth: "220px" }}>
@@ -168,12 +178,12 @@ export default async function Home() {
               Runner-up — {brief.runner_up}
             </p>
 
-            <TideDownload />
-
             <FeedbackForm
               recommendedSpot={brief.spot}
               conditionsSummary={brief.conditions_summary}
             />
+
+            <TideDownload />
           </>
         ) : null}
 

@@ -1,0 +1,156 @@
+import type { SpotProfile } from "./spots"
+
+export interface Location {
+  id: string
+  name: string
+  country: string
+  lat: number
+  lng: number
+  mapCenter: [number, number]
+  mapZoom: number
+  spots: SpotProfile[]
+}
+
+export const LOCATIONS: Location[] = [
+  {
+    id: "peniche",
+    name: "Peniche",
+    country: "PT",
+    lat: 39.36, lng: -9.38,
+    mapCenter: [39.355, -9.383],
+    mapZoom: 10,
+    spots: [
+      { name: "Supertubos", facing: 225, swellDirMin: 200, swellDirMax: 260, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 20, offshoreWindMax: 80, periodMin: 10, tide: "mid to high", notes: "World-class barrels. SW facing, N/NE wind offshore. Needs SW swell. Heavy." },
+      { name: "Consolacao", facing: 225, swellDirMin: 200, swellDirMax: 260, swellMin: 0.8, swellMax: 3.5, offshoreWindMin: 10, offshoreWindMax: 70, periodMin: 9, tide: "low to mid", notes: "Reef break. SW facing, N/NE offshore. Good rights. Handles bigger swell." },
+      { name: "Molhe Leste", facing: 250, swellDirMin: 220, swellDirMax: 280, swellMin: 0.6, swellMax: 1.8, offshoreWindMin: 30, offshoreWindMax: 90, periodMin: 7, tide: "low to mid", notes: "Pier break. ENE offshore. Peninsula shelter. Mainly lefts." },
+      { name: "Lagide", facing: 315, swellDirMin: 280, swellDirMax: 350, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 90, offshoreWindMax: 180, periodMin: 8, tide: "low to mid", notes: "North side. NW facing. SE offshore. Lefts." },
+      { name: "Baleal", facing: 340, swellDirMin: 300, swellDirMax: 360, swellMin: 0.6, swellMax: 2.5, offshoreWindMin: 120, offshoreWindMax: 180, periodMin: 7, tide: "all tides", notes: "Sheltered, consistent. SE offshore. Reef rights + south lefts." },
+      { name: "Praia del Rey", facing: 290, swellDirMin: 270, swellDirMax: 330, swellMin: 0.6, swellMax: 2.5, offshoreWindMin: 140, offshoreWindMax: 200, periodMin: 7, tide: "below mid", notes: "Multiple peaks. S/SE offshore. Not crowded." },
+      { name: "Areia Branca", facing: 270, swellDirMin: 240, swellDirMax: 300, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 120, periodMin: 8, tide: "low falling", notes: "Exposed beach break. E offshore. Uncrowded." },
+    ],
+  },
+
+  {
+    id: "ericeira",
+    name: "Ericeira",
+    country: "PT",
+    lat: 39.01, lng: -9.42,
+    mapCenter: [39.01, -9.42],
+    mapZoom: 12,
+    spots: [
+      { name: "Ribeira d'Ilhas", facing: 280, swellDirMin: 260, swellDirMax: 320, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 140, periodMin: 9, tide: "all tides", notes: "Classic right point. WST event spot. E/SE offshore. Long walls." },
+      { name: "Coxos", facing: 275, swellDirMin: 260, swellDirMax: 310, swellMin: 1.2, swellMax: 3.5, offshoreWindMin: 70, offshoreWindMax: 130, periodMin: 11, tide: "mid to high", notes: "Heavy reef right. One of Europe's best. Needs real swell. Experts only." },
+      { name: "Crazy Left", facing: 270, swellDirMin: 250, swellDirMax: 310, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 60, offshoreWindMax: 120, periodMin: 10, tide: "mid", notes: "Long left reef. Power and length. ENE offshore." },
+      { name: "Pedra Branca", facing: 260, swellDirMin: 240, swellDirMax: 300, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 9, tide: "mid", notes: "Reef break. Consistent. Works on most W swells." },
+      { name: "Foz do Lizandro", facing: 280, swellDirMin: 260, swellDirMax: 320, swellMin: 0.6, swellMax: 2.0, offshoreWindMin: 80, offshoreWindMax: 150, periodMin: 7, tide: "all tides", notes: "Beach break at river mouth. Good for beginners. E offshore." },
+    ],
+  },
+
+  {
+    id: "nazare",
+    name: "Nazaré",
+    country: "PT",
+    lat: 39.60, lng: -9.07,
+    mapCenter: [39.60, -9.07],
+    mapZoom: 12,
+    spots: [
+      { name: "Praia do Norte", facing: 260, swellDirMin: 240, swellDirMax: 300, swellMin: 3.0, swellMax: 15.0, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 14, tide: "all tides", notes: "Big wave spot. World record waves. Canyon amplifies swell. Experts/tow-in only above 4m." },
+      { name: "Praia de Nazaré", facing: 270, swellDirMin: 250, swellDirMax: 310, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "mid to high", notes: "Main beach. Multiple peaks. NE wind offshore. More manageable than Praia do Norte." },
+      { name: "Praia do Salgado", facing: 275, swellDirMin: 260, swellDirMax: 310, swellMin: 0.8, swellMax: 2.0, offshoreWindMin: 70, offshoreWindMax: 140, periodMin: 8, tide: "all tides", notes: "South beach, more sheltered. Good when Norte is too big." },
+    ],
+  },
+
+  {
+    id: "sagres",
+    name: "Sagres",
+    country: "PT",
+    lat: 37.01, lng: -8.94,
+    mapCenter: [37.01, -8.94],
+    mapZoom: 11,
+    spots: [
+      { name: "Tonel", facing: 220, swellDirMin: 190, swellDirMax: 260, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 290, offshoreWindMax: 50, periodMin: 10, tide: "all tides", notes: "SW-facing. Works on S/SW swell. NE/N offshore. Consistent, rarely crowded." },
+      { name: "Beliche", facing: 260, swellDirMin: 240, swellDirMax: 300, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 350, offshoreWindMax: 70, periodMin: 10, tide: "mid to high", notes: "Sheltered from N wind by cliffs. W-facing. N/NE offshore. Quality peaks." },
+      { name: "Mareta", facing: 185, swellDirMin: 160, swellDirMax: 220, swellMin: 0.8, swellMax: 2.0, offshoreWindMin: 270, offshoreWindMax: 30, periodMin: 8, tide: "all tides", notes: "S-facing inside the bay. Very sheltered. Needs big SW or direct S swell." },
+      { name: "Cordoama", facing: 270, swellDirMin: 250, swellDirMax: 310, swellMin: 1.2, swellMax: 3.5, offshoreWindMin: 50, offshoreWindMax: 130, periodMin: 10, tide: "mid", notes: "Exposed W-facing beach. Powerful. NE offshore. Rarely crowded." },
+    ],
+  },
+
+  {
+    id: "mundaka",
+    name: "Mundaka",
+    country: "ES",
+    lat: 43.41, lng: -2.70,
+    mapCenter: [43.41, -2.70],
+    mapZoom: 12,
+    spots: [
+      { name: "Mundaka", facing: 5, swellDirMin: 330, swellDirMax: 40, swellMin: 1.5, swellMax: 4.0, offshoreWindMin: 100, offshoreWindMax: 200, periodMin: 12, tide: "low to mid outgoing", notes: "One of Europe's best lefts. Sandbar at river mouth. S/SE offshore. Needs N swell + low tide." },
+      { name: "Laida", facing: 350, swellDirMin: 310, swellDirMax: 40, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 110, offshoreWindMax: 200, periodMin: 9, tide: "all tides", notes: "Beach across estuary. Works when Mundaka is too big. Beginner friendly." },
+      { name: "Bakio", facing: 355, swellDirMin: 320, swellDirMax: 40, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 120, offshoreWindMax: 210, periodMin: 8, tide: "all tides", notes: "Beach break 8km west. More consistent than Mundaka. S wind offshore." },
+    ],
+  },
+
+  {
+    id: "zarautz",
+    name: "Zarautz",
+    country: "ES",
+    lat: 43.29, lng: -2.17,
+    mapCenter: [43.29, -2.17],
+    mapZoom: 12,
+    spots: [
+      { name: "Zarautz", facing: 0, swellDirMin: 320, swellDirMax: 50, swellMin: 0.8, swellMax: 3.0, offshoreWindMin: 120, offshoreWindMax: 220, periodMin: 9, tide: "all tides", notes: "Long beach. Consistent. S wind offshore. Multiple peaks. Good surf town vibe." },
+      { name: "Orio", facing: 355, swellDirMin: 310, swellDirMax: 40, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 110, offshoreWindMax: 200, periodMin: 8, tide: "all tides", notes: "River mouth break east of Zarautz. Sandbar. S/SE offshore." },
+      { name: "Zumaia", facing: 340, swellDirMin: 300, swellDirMax: 30, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 110, offshoreWindMax: 220, periodMin: 9, tide: "mid to high", notes: "Beach and reef. Flysch cliffs backdrop. Can be powerful. S offshore." },
+    ],
+  },
+
+  {
+    id: "hossegor",
+    name: "Hossegor",
+    country: "FR",
+    lat: 43.67, lng: -1.43,
+    mapCenter: [43.67, -1.43],
+    mapZoom: 11,
+    spots: [
+      { name: "La Gravière", facing: 270, swellDirMin: 255, swellDirMax: 300, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 11, tide: "low to mid", notes: "Elite shorebreak. WSL event spot. E offshore. One of France's best beach breaks. Very powerful." },
+      { name: "Les Estagnots", facing: 270, swellDirMin: 255, swellDirMax: 305, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 10, tide: "all tides", notes: "Quality beach break just south. E/ENE offshore. Multiple peaks." },
+      { name: "La Nord", facing: 268, swellDirMin: 250, swellDirMax: 300, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "mid to high", notes: "North end of the beach. Less crowded than La Grav." },
+      { name: "Capbreton", facing: 275, swellDirMin: 260, swellDirMax: 310, swellMin: 0.6, swellMax: 2.0, offshoreWindMin: 70, offshoreWindMax: 140, periodMin: 8, tide: "all tides", notes: "More sheltered thanks to the canyon. E offshore. Works smaller days." },
+      { name: "Seignosse Le Penon", facing: 268, swellDirMin: 250, swellDirMax: 300, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "North of Hossegor. Hollow beach peaks. Often less crowded." },
+    ],
+  },
+
+  {
+    id: "biarritz",
+    name: "Biarritz",
+    country: "FR",
+    lat: 43.48, lng: -1.56,
+    mapCenter: [43.48, -1.56],
+    mapZoom: 12,
+    spots: [
+      { name: "Côte des Basques", facing: 255, swellDirMin: 235, swellDirMax: 290, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 9, tide: "low to mid", notes: "Iconic spot. Disappears at high tide. NE offshore. Long lefts and rights." },
+      { name: "Grande Plage", facing: 275, swellDirMin: 255, swellDirMax: 310, swellMin: 0.6, swellMax: 2.0, offshoreWindMin: 70, offshoreWindMax: 140, periodMin: 8, tide: "all tides", notes: "Town beach. More forgiving, busy. E offshore. Good for all levels." },
+      { name: "Anglet Les Cavaliers", facing: 270, swellDirMin: 250, swellDirMax: 305, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "Long beach north of Biarritz. Multiple peaks. E offshore. Less crowded than town." },
+      { name: "Lafitenia", facing: 260, swellDirMin: 240, swellDirMax: 295, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 50, offshoreWindMax: 120, periodMin: 10, tide: "all tides", notes: "Point break south of town. Long right walls. Longboard paradise. ENE offshore." },
+    ],
+  },
+
+  {
+    id: "lacanau",
+    name: "Lacanau",
+    country: "FR",
+    lat: 45.00, lng: -1.20,
+    mapCenter: [45.00, -1.20],
+    mapZoom: 12,
+    spots: [
+      { name: "Lacanau Ocean", facing: 272, swellDirMin: 255, swellDirMax: 305, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "Classic French beach break. E offshore. Pro contest site. Multiple peaks." },
+      { name: "Les Grands Crohots", facing: 270, swellDirMin: 255, swellDirMax: 300, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 9, tide: "all tides", notes: "South of Lacanau. Sandbanks shift. Less crowded. E offshore." },
+      { name: "Le Porge", facing: 272, swellDirMin: 255, swellDirMax: 300, swellMin: 0.8, swellMax: 2.0, offshoreWindMin: 60, offshoreWindMax: 130, periodMin: 8, tide: "all tides", notes: "Exposed beach, no facilities. Long drive but worth it for solitude." },
+    ],
+  },
+]
+
+export const DEFAULT_LOCATION_ID = "peniche"
+
+export function getLocation(id: string | undefined): Location {
+  return LOCATIONS.find(l => l.id === id) ?? LOCATIONS.find(l => l.id === DEFAULT_LOCATION_ID)!
+}
