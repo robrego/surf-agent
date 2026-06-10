@@ -21,7 +21,7 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Peniche Surf Agent",
+  title: "Peniche Surf Check",
   description: "Daily surf brief for Peniche",
 };
 

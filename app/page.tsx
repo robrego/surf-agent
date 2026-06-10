@@ -34,7 +34,7 @@ export default async function Home() {
               letterSpacing: "0.04em",
               textTransform: "uppercase",
             }}>
-              Peniche Surf Agent
+              Peniche Surf Check
             </h1>
           </div>
         </header>
