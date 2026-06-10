@@ -361,7 +361,7 @@ export async function runAgent() {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "llama-3.3-70b",
+      model: "llama3.3-70b",
       max_tokens: 800,
       temperature: 0.3,
       messages: [{ role: "user", content: prompt }],
@@ -370,7 +370,7 @@ export async function runAgent() {
 
   if (!res.ok) {
     const err = await res.text()
-    throw new Error(`Groq API error ${res.status}: ${err}`)
+    throw new Error(`Cerebras API error ${res.status}: ${err}`)
   }
 
   const data = await res.json()
