@@ -76,11 +76,7 @@ export default function FeedbackForm({
 
   return (
     <section style={sectionStyle}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-          <path d="M2 14c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-          <path d="M2 19.5c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" opacity="0.6" />
-        </svg>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem", justifyContent: "space-between" }}>
         <p style={{
           fontFamily: "var(--font-display)",
           fontSize: "1.25rem",
@@ -90,6 +86,10 @@ export default function FeedbackForm({
         }}>
           How was the forecast?
         </p>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+          <path d="M2 14c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+          <path d="M2 19.5c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" opacity="0.6" />
+        </svg>
       </div>
 
       <div>
