@@ -1,6 +1,5 @@
 "use client"
 import { MapContainer, TileLayer } from "react-leaflet"
-import "leaflet/dist/leaflet.css"
 
 const SIZE = 180
 const PENICHE: [number, number] = [39.355, -9.383]
@@ -58,7 +57,7 @@ export default function PenicheMap({
       }}>
         <MapContainer
           center={PENICHE}
-          zoom={11}
+          zoom={10}
           style={{ width: SIZE, height: SIZE }}
           zoomControl={false}
           dragging={false}

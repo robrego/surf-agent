@@ -284,7 +284,7 @@ ${feedback}
 - negative: bad — say so
 
 ## Your task
-- Write a 3 sentence morning brief like texting a surf buddy
+- Write a 2 sentence morning brief like texting a surf buddy
 - Recommend the #1 viable spot and suggest a time window around its best hour
 - Mention the runner-up
 - Calibrate your tone to the absolute score, not just the ranking. If the top score is marginal or poor, say so clearly — don't spin it positively just because it's the best of a bad bunch.
@@ -295,7 +295,7 @@ Respond ONLY with valid JSON, no markdown, no backticks:
 {
   "spot": "top spot name or 'Rest day'",
   "time_window": "e.g. 07:00-10:00",
-  "brief": "3-4 casual sentences",
+  "brief": "2 casual sentences",
   "confidence": "high/medium/low",
   "runner_up": "second spot name or 'none'",
   "conditions_summary": {
