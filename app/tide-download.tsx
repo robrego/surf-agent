@@ -154,30 +154,6 @@ export default function TideDownload() {
           </select>
         </div>
 
-        <button
-          onClick={fetchPreview}
-          disabled={previewLoading}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0.95rem 1.5rem",
-            borderRadius: "12px",
-            border: "none",
-            background: "var(--surface)",
-            color: "var(--accent)",
-            fontFamily: "var(--font-body)",
-            fontSize: "1rem",
-            fontWeight: 600,
-            textDecoration: "none",
-            minHeight: "3rem",
-            cursor: "pointer",
-            opacity: previewLoading ? 0.6 : 1,
-          }}
-        >
-          {previewLoading ? "Loading..." : "Preview"}
-        </button>
-
         <a
           href={href}
           download="peniche-tides.ics"
@@ -201,7 +177,34 @@ export default function TideDownload() {
           Download Your "Busy" Schedule
         </a>
       </div>
-      <div style={{ marginTop: "0.75rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
+
+      <div style={{ marginTop: "1rem" }}>
+        <button
+          onClick={fetchPreview}
+          disabled={previewLoading}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "0.75rem 1.5rem",
+            borderRadius: "12px",
+            border: "none",
+            background: "var(--surface)",
+            color: "var(--accent)",
+            fontFamily: "var(--font-body)",
+            fontSize: "1rem",
+            fontWeight: 600,
+            textDecoration: "none",
+            minHeight: "3rem",
+            cursor: "pointer",
+            opacity: previewLoading ? 0.6 : 1,
+          }}
+        >
+          {previewLoading ? "Loading..." : "Preview"}
+        </button>
+      </div>
+
+      <div style={{ marginTop: "1rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
         <div style={{ position: "relative" }}>
           <span 
             onClick={() => setShowGoogleTip(!showGoogleTip)}
