@@ -75,7 +75,7 @@ export default function FeedbackForm({
     <section style={sectionStyle}>
       <p style={{
         fontFamily: "var(--font-display)",
-        fontSize: "1.05rem",
+        fontSize: "1.25rem",
         fontWeight: 600,
         color: "var(--text)",
         marginBottom: "1.5rem",

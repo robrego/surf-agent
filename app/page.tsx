@@ -54,7 +54,7 @@ export default async function Home() {
             </p>
             <h1 style={{
               fontFamily: "var(--font-display)",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
               fontWeight: 600,
               color: "var(--muted)",
               letterSpacing: "0.04em",
@@ -192,7 +192,7 @@ export default async function Home() {
             color: "var(--muted)",
             letterSpacing: "0.06em",
           }}>
-            Open-Meteo · Llama 3.3 via Groq · learns from feedback
+            Open-Meteo · learns from feedback
           </p>
         </footer>
       </div>
