@@ -276,11 +276,18 @@ ${viableText || "NONE — all spots are blown out or have poor conditions."}
 ## Eliminated spots
 ${elimText || "None eliminated."}
 ${feedback}
+## Score calibration (max possible score is ~110)
+- 80+: great day, go surf
+- 50–79: decent, worth it
+- 20–49: marginal — mention it's not ideal
+- 0–19: poor — be honest, probably not worth it
+- negative: bad — say so
+
 ## Your task
 - Write a 3-4 sentence morning brief like texting a surf buddy
 - Recommend the #1 viable spot and suggest a time window around its best hour
 - Mention the runner-up
-- Be honest about conditions. If everything is marginal, say so.
+- Calibrate your tone to the absolute score, not just the ranking. If the top score is marginal or poor, say so clearly — don't spin it positively just because it's the best of a bad bunch.
 - If no spots are viable, say it's a rest day. But check if any eliminated spots scored above 0 — if so, mention the highest-scoring one as a "long shot if you're desperate" option.
 - Surfer rides goofy, no preference on lefts or rights
 
