@@ -27,6 +27,15 @@ export const SPOTS: SpotProfile[] = [
     tide: "low to mid",
     notes: "Reef break. SW facing, N/NE wind offshore. Good rights. Handles bigger swell. Urchins and rocks."
   },
+
+  {
+    name: "Porto Batel", facing: 245,
+    swellDirMin: 220, swellDirMax: 330, swellMin: 1.0, swellMax: 3.0,
+    offshoreWindMin: 20, offshoreWindMax: 80, periodMin: 9,
+    tide: "mid to high",
+    notes: "Reef/point break south of Consolacao. NE offshore, sheltered from N wind. Rights. Powerful. Rocks and urchins. Needs bigger swell."
+  },
+
   {
     name: "Molhe Leste", facing: 250,
     swellDirMin: 220, swellDirMax: 280, swellMin: 0.6, swellMax: 1.8,
