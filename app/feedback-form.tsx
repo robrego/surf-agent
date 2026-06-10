@@ -43,18 +43,18 @@ export default function FeedbackForm({
 
   const sectionStyle = {
     background: "#fff",
-    border: "1px solid var(--border)",
-    borderRadius: "4px",
+    borderRadius: "16px",
     padding: "1.75rem 1.5rem",
     marginTop: "clamp(1.5rem, 4vw, 3rem)",
+    boxShadow: "0 20px 60px rgba(15, 23, 42, 0.06)",
   }
 
   const labelStyle = {
     fontFamily: "var(--font-body)",
-    fontSize: "0.8rem",
+    fontSize: "0.9rem",
     color: "var(--muted)",
-    letterSpacing: "0.15em",
-    textTransform: "uppercase" as const,
+    letterSpacing: "normal",
+    textTransform: "none" as const,
     display: "block",
     marginBottom: "0.875rem",
   }
@@ -76,15 +76,21 @@ export default function FeedbackForm({
 
   return (
     <section style={sectionStyle}>
-      <p style={{
-        fontFamily: "var(--font-body)",
-        fontSize: "1.25rem",
-        fontWeight: 600,
-        color: "var(--text)",
-        marginBottom: "1.5rem",
-      }}>
-        How was the call?
-      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+          <path d="M2 14c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+          <path d="M2 19.5c3-3 5-3 8-1 2.2 1.5 4.5 1.5 6.5 0 2.2-1.6 4-1.5 6.5 1" stroke="#2563eb" strokeWidth="2.2" fill="none" strokeLinecap="round" opacity="0.6" />
+        </svg>
+        <p style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "1.25rem",
+          fontWeight: 600,
+          color: "var(--text)",
+          margin: 0,
+        }}>
+          How was the forecast?
+        </p>
+      </div>
 
       <div>
         <span style={labelStyle}>Rate the pick</span>
@@ -97,10 +103,10 @@ export default function FeedbackForm({
                 fontFamily: "var(--font-body)",
                 fontSize: "0.95rem",
                 padding: "0.75rem 1.4rem",
-                border: `1px solid ${rating === value ? "var(--accent)" : "var(--border)"}`,
+                border: "none",
                 background: rating === value ? "var(--accent)" : "var(--surface)",
                 color: rating === value ? "var(--bg)" : "var(--muted)",
-                borderRadius: "4px",
+                borderRadius: "12px",
                 cursor: "pointer",
                 transition: "all 0.15s ease",
               }}
@@ -118,13 +124,13 @@ export default function FeedbackForm({
           onChange={(e) => setActualSpot(e.target.value)}
           style={{
             width: "100%",
-            padding: "0.8rem 1rem",
-            border: "1px solid var(--border)",
+            padding: "0.9rem 1rem",
+            border: "none",
             background: "var(--surface)",
             color: actualSpot ? "var(--text)" : "var(--muted)",
             fontFamily: "var(--font-body)",
             fontSize: "1rem",
-            borderRadius: "4px",
+            borderRadius: "12px",
             outline: "none",
             appearance: "none" as const,
             WebkitAppearance: "none" as const,
@@ -147,13 +153,13 @@ export default function FeedbackForm({
           onChange={(e) => setNotes(e.target.value)}
           style={{
             width: "100%",
-            padding: "0.8rem 1rem",
-            border: "1px solid var(--border)",
+            padding: "0.95rem 1rem",
+            border: "none",
             background: "var(--surface)",
             color: "var(--text)",
             fontFamily: "var(--font-body)",
             fontSize: "1rem",
-            borderRadius: "4px",
+            borderRadius: "12px",
             outline: "none",
           }}
         />
@@ -167,10 +173,10 @@ export default function FeedbackForm({
           fontSize: "1rem",
           fontWeight: 500,
           padding: "0.85rem 1.75rem",
-          border: "1px solid var(--accent)",
-          background: "var(--surface)",
-          color: "var(--accent)",
-          borderRadius: "4px",
+          border: "none",
+          background: "var(--accent)",
+          color: "#fff",
+          borderRadius: "12px",
           cursor: rating ? "pointer" : "not-allowed",
           opacity: rating ? 1 : 0.3,
           transition: "all 0.15s ease",
