@@ -1,22 +1,13 @@
-import React from "react"
 import { runAgent } from "@/lib/agent"
 import FeedbackForm from "./feedback-form"
 export const dynamic = "force-dynamic"
 
-function formatValue(val: string): React.ReactNode[] {
-  const parts = val.split(/([\d.]+(?:km\/h|mph|m\/s|ft|m|s))/g)
-  return parts.map((part, i) => {
-    const m = part.match(/^([\d.]+)(km\/h|mph|m\/s|ft|m|s)$/)
-    if (m) {
-      return (
-        <span key={i} style={{ whiteSpace: "nowrap" }}>
-          <span style={{ fontWeight: 600 }}>{m[1]}</span>
-          <span style={{ fontSize: "0.78em", opacity: 0.55, marginLeft: "0.05em" }}>{m[2]}</span>
-        </span>
-      )
-    }
-    return <span key={i} style={{ fontSize: "0.82em", opacity: 0.65 }}>{part}</span>
-  })
+function formatValue(val: string) {
+  return val.split(/([\d.]+)/g).map((part, i) =>
+    /^[\d.]+$/.test(part)
+      ? <strong key={i} style={{ fontWeight: 600 }}>{part}</strong>
+      : <span key={i}>{part}</span>
+  )
 }
 
 export default async function Home() {
@@ -154,7 +145,7 @@ export default async function Home() {
                     </span>
                     <span style={{
                       fontFamily: "var(--font-body)",
-                      fontSize: "1rem",
+                      fontSize: "1.15rem",
                       color: "var(--text)",
                       lineHeight: 1.5,
                     }}>

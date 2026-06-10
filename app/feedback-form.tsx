@@ -93,16 +93,14 @@ export default function FeedbackForm({
               key={value}
               onClick={() => setRating(value)}
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.8rem",
-                letterSpacing: "0.06em",
-                padding: "0.6rem 1.1rem",
+                fontFamily: "var(--font-body)",
+                fontSize: "0.95rem",
+                padding: "0.75rem 1.4rem",
                 border: `1px solid ${rating === value ? "var(--accent)" : "var(--border)"}`,
                 background: rating === value ? "var(--accent)" : "transparent",
                 color: rating === value ? "var(--bg)" : "var(--muted)",
                 cursor: "pointer",
                 transition: "all 0.15s ease",
-                textTransform: "uppercase" as const,
               }}
             >
               {label}
@@ -118,12 +116,12 @@ export default function FeedbackForm({
           onChange={(e) => setActualSpot(e.target.value)}
           style={{
             width: "100%",
-            padding: "0.65rem 0.875rem",
+            padding: "0.8rem 1rem",
             border: "1px solid var(--border)",
             background: "var(--surface)",
             color: actualSpot ? "var(--text)" : "var(--muted)",
             fontFamily: "var(--font-body)",
-            fontSize: "0.9rem",
+            fontSize: "1rem",
             outline: "none",
             appearance: "none" as const,
             WebkitAppearance: "none" as const,
@@ -146,12 +144,12 @@ export default function FeedbackForm({
           onChange={(e) => setNotes(e.target.value)}
           style={{
             width: "100%",
-            padding: "0.65rem 0.875rem",
+            padding: "0.8rem 1rem",
             border: "1px solid var(--border)",
             background: "var(--surface)",
             color: "var(--text)",
             fontFamily: "var(--font-body)",
-            fontSize: "0.9rem",
+            fontSize: "1rem",
             outline: "none",
           }}
         />
@@ -162,9 +160,9 @@ export default function FeedbackForm({
         disabled={!rating}
         style={{
           fontFamily: "var(--font-body)",
-          fontSize: "0.9rem",
+          fontSize: "1rem",
           fontWeight: 500,
-          padding: "0.7rem 1.5rem",
+          padding: "0.85rem 1.75rem",
           border: "1px solid var(--accent)",
           background: "transparent",
           color: "var(--accent)",
