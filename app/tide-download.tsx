@@ -10,7 +10,7 @@ const DURATION_OPTIONS = [
 ]
 
 export default function TideDownload() {
-  const [windowHours, setWindowHours] = useState(2)
+  const [windowHours, setWindowHours] = useState(1)
   const [durationDays, setDurationDays] = useState(7)
   const [showPreview, setShowPreview] = useState(false)
   const [tides, setTides] = useState<any[]>([])
@@ -49,13 +49,10 @@ export default function TideDownload() {
     const eventBlocks = ics.split("BEGIN:VEVENT")
     for (let i = 1; i < eventBlocks.length; i++) {
       const block = eventBlocks[i]
-      const match = block.match(/DESCRIPTION:Busy period around peak high tide at (\d{2}:\d{2}) \(([\d.]+)m\)/)
       const dtstart = block.match(/DTSTART:(\d{8}T\d{6}Z)/)
       const dtend = block.match(/DTEND:(\d{8}T\d{6}Z)/)
-      if (match && dtstart && dtend) {
+      if (dtstart && dtend) {
         events.push({
-          time: match[1],
-          height: match[2],
           start: formatDateString(dtstart[1]),
           end: formatDateString(dtend[1]),
         })
@@ -108,7 +105,7 @@ export default function TideDownload() {
             color: "var(--text)",
           }}
         >
-          Calendar blocker around high tides
+          Calendar blocker around mid tide
         </p>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
           <path d="M19 4H18V2H16V4H8V2H6V4H5C3.9 4 3 4.9 3 6V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V9H19V20ZM19 7H5V6H19V7ZM7 12H11V16H7V12Z" fill="#1a73e8" />
@@ -117,7 +114,7 @@ export default function TideDownload() {
       <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", alignItems: "flex-end" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <span style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--muted)", letterSpacing: "normal" }}>
-            Before and after high tide
+            Before and after mid tide
           </span>
           <select
             id="tide-download-window"
@@ -231,18 +228,17 @@ export default function TideDownload() {
       {showPreview && (
         <div style={{ marginTop: "1.5rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)" }}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "1rem", fontWeight: 600, color: "var(--text)", marginBottom: "1rem" }}>
-            High tides for the next {durationDays} days
+            Mid tides for the next {durationDays} days
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxHeight: "300px", overflowY: "auto" }}>
             {tides.length > 0 ? (
               tides.map((tide, i) => (
                 <div key={i} style={{ fontSize: "0.9rem", color: "var(--text)", padding: "0.75rem", background: "var(--surface)", borderRadius: "8px" }}>
-                  <div style={{ fontWeight: 500 }}>Peak: {tide.time} ({tide.height}m)</div>
-                  <div style={{ fontSize: "0.85rem", color: "var(--muted)", marginTop: "0.25rem" }}>Busy: {tide.start} → {tide.end}</div>
+                  <div style={{ fontWeight: 500 }}>{tide.start} → {tide.end}</div>
                 </div>
               ))
             ) : (
-              <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>No high tides found for the selected period.</p>
+              <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>No mid tides found for the selected period.</p>
             )}
           </div>
         </div>

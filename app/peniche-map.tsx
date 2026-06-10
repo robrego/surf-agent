@@ -1,5 +1,14 @@
 "use client"
-import { MapContainer, TileLayer } from "react-leaflet"
+import { useEffect } from "react"
+import { MapContainer, TileLayer, useMap } from "react-leaflet"
+
+function MapUpdater({ center, zoom }: { center: [number, number]; zoom: number }) {
+  const map = useMap()
+  useEffect(() => {
+    map.setView(center, zoom)
+  }, [center, zoom, map])
+  return null
+}
 
 const SIZE = 180
 
@@ -70,11 +79,12 @@ export default function PenicheMap({
           attributionControl={false}
         >
           <TileLayer url="https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" />
+          <MapUpdater center={mapCenter} zoom={mapZoom} />
         </MapContainer>
 
         <svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}
-          style={{ position: "absolute", inset: 0, width: SIZE, height: SIZE, pointerEvents: "none", zIndex: 1000 }}
+          style={{ position: "absolute", inset: 0, width: SIZE, height: SIZE, pointerEvents: "none", zIndex: 800 }}
         >
           {/* Swell: blue */}
           <path d={swell.shaft} stroke="white" strokeWidth="5" strokeLinecap="round" fill="none" />

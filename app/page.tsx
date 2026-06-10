@@ -34,7 +34,7 @@ export default async function Home({
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 5rem)" }}>
 
-        <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)" }}>
+        <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)", position: "relative", zIndex: 1000 }}>
           <h1 style={{
             fontFamily: "var(--font-display)",
             fontSize: "0.8rem",
