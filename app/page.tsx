@@ -67,6 +67,7 @@ export default async function Home() {
                   color: "#fff",
                   padding: "0.3rem 0.75rem",
                   fontWeight: 500,
+                  borderRadius: "4px",
                 }}>
                   {brief.confidence}
                 </span>
@@ -115,19 +116,23 @@ export default async function Home() {
               )}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1, minWidth: "220px" }}>
                 {[
-                  { label: "Swell", value: brief.conditions_summary?.swell ?? "--" },
-                  { label: "Wind", value: brief.conditions_summary?.wind ?? "--" },
-                  { label: "Window", value: brief.conditions_summary?.best_window ?? "--" },
-                ].map(({ label, value }) => (
+                  { label: "Swell", value: brief.conditions_summary?.swell ?? "--", dot: "#1d4ed8" },
+                  { label: "Wind", value: brief.conditions_summary?.wind ?? "--", dot: "#111" },
+                  { label: "Window", value: brief.conditions_summary?.best_window ?? "--", dot: null },
+                ].map(({ label, value, dot }) => (
                   <div key={label} style={{
                     display: "flex",
-                    alignItems: "baseline",
+                    alignItems: "center",
                     gap: "1.25rem",
                     background: "#fff",
                     border: "1px solid var(--border)",
-                    padding: "0.875rem 1.25rem",
+                    borderRadius: "4px",
+                    padding: "1.1rem 1.4rem",
                   }}>
                     <span style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.4rem",
                       fontFamily: "var(--font-mono)",
                       fontSize: "0.75rem",
                       color: "var(--muted)",
@@ -136,6 +141,7 @@ export default async function Home() {
                       minWidth: "4rem",
                       flexShrink: 0,
                     }}>
+                      {dot && <span style={{ width: 7, height: 7, borderRadius: "50%", background: dot, flexShrink: 0, display: "inline-block" }} />}
                       {label}
                     </span>
                     <span style={{

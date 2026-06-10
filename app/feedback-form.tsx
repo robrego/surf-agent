@@ -44,6 +44,7 @@ export default function FeedbackForm({
   const sectionStyle = {
     background: "#fff",
     border: "1px solid var(--border)",
+    borderRadius: "4px",
     padding: "1.75rem 1.5rem",
     marginTop: "clamp(1.5rem, 4vw, 3rem)",
   }
@@ -99,6 +100,7 @@ export default function FeedbackForm({
                 border: `1px solid ${rating === value ? "var(--accent)" : "var(--border)"}`,
                 background: rating === value ? "var(--accent)" : "var(--surface)",
                 color: rating === value ? "var(--bg)" : "var(--muted)",
+                borderRadius: "4px",
                 cursor: "pointer",
                 transition: "all 0.15s ease",
               }}
@@ -122,6 +124,7 @@ export default function FeedbackForm({
             color: actualSpot ? "var(--text)" : "var(--muted)",
             fontFamily: "var(--font-body)",
             fontSize: "1rem",
+            borderRadius: "4px",
             outline: "none",
             appearance: "none" as const,
             WebkitAppearance: "none" as const,
@@ -150,6 +153,7 @@ export default function FeedbackForm({
             color: "var(--text)",
             fontFamily: "var(--font-body)",
             fontSize: "1rem",
+            borderRadius: "4px",
             outline: "none",
           }}
         />
@@ -166,6 +170,7 @@ export default function FeedbackForm({
           border: "1px solid var(--accent)",
           background: "var(--surface)",
           color: "var(--accent)",
+          borderRadius: "4px",
           cursor: rating ? "pointer" : "not-allowed",
           opacity: rating ? 1 : 0.3,
           transition: "all 0.15s ease",
