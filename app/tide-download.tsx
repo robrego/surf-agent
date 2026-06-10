@@ -180,7 +180,7 @@ export default function TideDownload() {
 
       <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
         <button
-          onClick={fetchPreview}
+          onClick={() => showPreview ? setShowPreview(false) : fetchPreview()}
           disabled={previewLoading}
           style={{
             display: "inline-flex",
@@ -200,64 +200,64 @@ export default function TideDownload() {
             opacity: previewLoading ? 0.6 : 1,
           }}
         >
-          {previewLoading ? "Loading..." : "Preview"}
+          {previewLoading ? "Loading..." : showPreview ? "Close" : "Preview"}
         </button>
+      </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
-          <div style={{ position: "relative" }}>
-            <span 
-              onClick={() => setShowGoogleTip(!showGoogleTip)}
-              onMouseEnter={() => setShowGoogleTip(true)}
-              onMouseLeave={() => setShowGoogleTip(false)}
-              style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
-            >
-              Google Calendar
-            </span>
-            {showGoogleTip && (
-              <div style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                marginTop: "0.5rem",
-                background: "var(--text)",
-                color: "var(--bg)",
-                padding: "0.5rem 0.75rem",
-                borderRadius: "4px",
-                fontSize: "0.75rem",
-                whiteSpace: "nowrap",
-                zIndex: 1000,
-              }}>
-                Settings &gt; Import &amp; Export &gt; Import
-              </div>
-            )}
-          </div>
-          <div style={{ position: "relative" }}>
-            <span 
-              onClick={() => setShowTeamsTip(!showTeamsTip)}
-              onMouseEnter={() => setShowTeamsTip(true)}
-              onMouseLeave={() => setShowTeamsTip(false)}
-              style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
-            >
-              Microsoft Teams
-            </span>
-            {showTeamsTip && (
-              <div style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                marginTop: "0.5rem",
-                background: "var(--text)",
-                color: "var(--bg)",
-                padding: "0.5rem 0.75rem",
-                borderRadius: "4px",
-                fontSize: "0.75rem",
-                whiteSpace: "nowrap",
-                zIndex: 1000,
-              }}>
-                Calendar app &gt; Import events &gt; select file
-              </div>
-            )}
-          </div>
+      <div style={{ marginTop: "1rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)", display: "flex", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ position: "relative" }}>
+          <span 
+            onClick={() => setShowGoogleTip(!showGoogleTip)}
+            onMouseEnter={() => setShowGoogleTip(true)}
+            onMouseLeave={() => setShowGoogleTip(false)}
+            style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
+          >
+            Google Calendar
+          </span>
+          {showGoogleTip && (
+            <div style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              marginTop: "0.5rem",
+              background: "var(--text)",
+              color: "var(--bg)",
+              padding: "0.5rem 0.75rem",
+              borderRadius: "4px",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+              zIndex: 1000,
+            }}>
+              Settings &gt; Import &amp; Export &gt; Import
+            </div>
+          )}
+        </div>
+        <div style={{ position: "relative" }}>
+          <span 
+            onClick={() => setShowTeamsTip(!showTeamsTip)}
+            onMouseEnter={() => setShowTeamsTip(true)}
+            onMouseLeave={() => setShowTeamsTip(false)}
+            style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
+          >
+            Microsoft Teams
+          </span>
+          {showTeamsTip && (
+            <div style={{
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              marginTop: "0.5rem",
+              background: "var(--text)",
+              color: "var(--bg)",
+              padding: "0.5rem 0.75rem",
+              borderRadius: "4px",
+              fontSize: "0.75rem",
+              whiteSpace: "nowrap",
+              zIndex: 1000,
+            }}>
+              Calendar app &gt; Import events &gt; select file
+            </div>
+          )}
         </div>
       </div>
 
@@ -278,22 +278,6 @@ export default function TideDownload() {
               <p style={{ color: "var(--muted)", fontSize: "0.9rem" }}>No high tides found for the selected period.</p>
             )}
           </div>
-          <button
-            onClick={() => setShowPreview(false)}
-            style={{
-              marginTop: "1rem",
-              padding: "0.5rem 1rem",
-              border: "none",
-              borderRadius: "6px",
-              background: "var(--surface)",
-              color: "var(--accent)",
-              cursor: "pointer",
-              fontSize: "0.9rem",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            Close Preview
-          </button>
         </div>
       )}
 
