@@ -51,9 +51,9 @@ export default function PenicheMap({
         position: "relative",
         width: SIZE,
         height: SIZE,
-        borderRadius: 4,
+        borderRadius: 16,
         overflow: "hidden",
-        border: "1px solid var(--border)",
+        border: "none",
       }}>
         <MapContainer
           center={PENICHE}

@@ -126,8 +126,8 @@ export default async function Home() {
                     alignItems: "center",
                     gap: "1.25rem",
                     background: "#fff",
-                    border: "1px solid var(--border)",
-                    borderRadius: "4px",
+                    border: "none",
+                    borderRadius: "16px",
                     padding: "1.1rem 1.4rem",
                   }}>
                     <span style={{
