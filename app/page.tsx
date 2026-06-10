@@ -44,7 +44,7 @@ export default async function Home() {
           <div>
             <p style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.85rem",
+              fontSize: "0.75rem",
               color: "var(--muted)",
               letterSpacing: "0.14em",
               textTransform: "uppercase",
