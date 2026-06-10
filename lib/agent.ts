@@ -361,7 +361,7 @@ export async function runAgent() {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "llama3.3-70b",
+      model: "gpt-oss-120b",
       max_tokens: 800,
       temperature: 0.3,
       messages: [{ role: "user", content: prompt }],
