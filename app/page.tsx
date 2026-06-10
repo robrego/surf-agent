@@ -20,29 +20,12 @@ export default async function Home() {
     error = e instanceof Error ? e.message : "Unknown error"
   }
 
-  const today = new Date().toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
-
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
       <div style={{ maxWidth: "960px", margin: "0 auto", padding: "clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 5rem)" }}>
 
         <header style={{ marginBottom: "clamp(2.5rem, 6vw, 5rem)" }}>
           <div>
-            <p style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.75rem",
-              color: "var(--muted)",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              marginBottom: "0.5rem",
-            }}>
-              {today}
-            </p>
             <h1 style={{
               fontFamily: "var(--font-display)",
               fontSize: "0.8rem",
