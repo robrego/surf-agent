@@ -62,6 +62,7 @@ export default async function Home() {
             }}>
               Peniche Surf Agent
             </h1>
+          </div>
         </header>
 
         {error ? (
@@ -107,8 +108,6 @@ export default async function Home() {
 
             <section style={{
               marginBottom: "clamp(2rem, 5vw, 3.5rem)",
-              borderTop: "1px solid var(--border)",
-              paddingTop: "1.75rem",
             }}>
               {(brief.brief ?? "").split(/\.\s+/).map((sentence: string, i: number, arr: string[]) => (
                 <p key={i} style={{
@@ -126,8 +125,6 @@ export default async function Home() {
 
             <section style={{
               marginBottom: "clamp(1.5rem, 4vw, 3rem)",
-              borderTop: "1px solid var(--border)",
-              paddingTop: "1.75rem",
             }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {[
