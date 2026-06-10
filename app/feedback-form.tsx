@@ -8,6 +8,12 @@ const SPOTS = [
   "Praia del Rey", "Cortico", "Areia Branca", "Didn't surf"
 ]
 
+const ratings = [
+  { value: "good", label: "Spot on" },
+  { value: "ok", label: "Decent" },
+  { value: "bad", label: "Wrong call" },
+]
+
 export default function FeedbackForm({
   recommendedSpot,
   conditionsSummary,
@@ -35,57 +41,139 @@ export default function FeedbackForm({
     setSent(true)
   }
 
+  const sectionStyle = {
+    borderTop: "1px solid var(--border)",
+    paddingTop: "1.75rem",
+  }
+
+  const labelStyle = {
+    fontFamily: "var(--font-mono)",
+    fontSize: "0.8rem",
+    color: "var(--muted)",
+    letterSpacing: "0.15em",
+    textTransform: "uppercase" as const,
+    display: "block",
+    marginBottom: "0.875rem",
+  }
+
   if (sent) {
     return (
-      <section className="border border-stone-200 rounded-lg p-4 bg-white">
-        <p className="text-sm text-stone-500">Logged. The agent will learn from this.</p>
+      <section style={sectionStyle}>
+        <p style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.875rem",
+          color: "var(--go)",
+          letterSpacing: "0.04em",
+        }}>
+          Logged. The agent will learn from this.
+        </p>
       </section>
     )
   }
 
   return (
-    <section className="border border-stone-200 rounded-lg p-4 bg-white">
-      <p className="text-sm font-medium mb-3">How was the call?</p>
+    <section style={sectionStyle}>
+      <p style={{
+        fontFamily: "var(--font-display)",
+        fontSize: "1.05rem",
+        fontWeight: 600,
+        color: "var(--text)",
+        marginBottom: "1.5rem",
+        letterSpacing: "0.01em",
+      }}>
+        How was the call?
+      </p>
 
-      <div className="flex gap-2 mb-4">
-        {["good", "ok", "bad"].map((r) => (
-          <button
-            key={r}
-            onClick={() => setRating(r)}
-            className={`px-4 py-2 rounded text-sm border ${
-              rating === r
-                ? "bg-stone-900 text-white border-stone-900"
-                : "bg-white text-stone-600 border-stone-200 hover:border-stone-400"
-            }`}
-          >
-            {r === "good" ? "Spot on" : r === "ok" ? "Decent" : "Wrong call"}
-          </button>
-        ))}
+      <div>
+        <span style={labelStyle}>Rate the pick</span>
+        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+          {ratings.map(({ value, label }) => (
+            <button
+              key={value}
+              onClick={() => setRating(value)}
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.8rem",
+                letterSpacing: "0.06em",
+                padding: "0.6rem 1.1rem",
+                border: `1px solid ${rating === value ? "var(--accent)" : "var(--border)"}`,
+                background: rating === value ? "var(--accent)" : "transparent",
+                color: rating === value ? "var(--bg)" : "var(--muted)",
+                cursor: "pointer",
+                transition: "all 0.15s ease",
+                textTransform: "uppercase" as const,
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <select
-        value={actualSpot}
-        onChange={(e) => setActualSpot(e.target.value)}
-        className="w-full p-2 border border-stone-200 rounded text-sm mb-3 bg-white"
-      >
-        <option value="">Where did you actually surf?</option>
-        {SPOTS.map((s) => (
-          <option key={s} value={s}>{s}</option>
-        ))}
-      </select>
+      <div style={{ marginBottom: "1rem" }}>
+        <label style={labelStyle}>Where did you actually surf?</label>
+        <select
+          value={actualSpot}
+          onChange={(e) => setActualSpot(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "0.65rem 0.875rem",
+            border: "1px solid var(--border)",
+            background: "var(--surface)",
+            color: actualSpot ? "var(--text)" : "var(--muted)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.8rem",
+            letterSpacing: "0.04em",
+            outline: "none",
+            appearance: "none" as const,
+            WebkitAppearance: "none" as const,
+            cursor: "pointer",
+          }}
+        >
+          <option value="">Select a spot</option>
+          {SPOTS.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Any notes? (optional)"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        className="w-full p-2 border border-stone-200 rounded text-sm mb-3"
-      />
+      <div style={{ marginBottom: "1.5rem" }}>
+        <label style={labelStyle}>Notes (optional)</label>
+        <input
+          type="text"
+          placeholder="Anything worth knowing..."
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "0.65rem 0.875rem",
+            border: "1px solid var(--border)",
+            background: "var(--surface)",
+            color: "var(--text)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.8rem",
+            letterSpacing: "0.04em",
+            outline: "none",
+          }}
+        />
+      </div>
 
       <button
         onClick={submit}
         disabled={!rating}
-        className="px-4 py-2 bg-stone-900 text-white rounded text-sm disabled:opacity-30"
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.85rem",
+          letterSpacing: "0.12em",
+          textTransform: "uppercase" as const,
+          padding: "0.7rem 1.5rem",
+          border: "1px solid var(--accent)",
+          background: "transparent",
+          color: "var(--accent)",
+          cursor: rating ? "pointer" : "not-allowed",
+          opacity: rating ? 1 : 0.3,
+          transition: "all 0.15s ease",
+        }}
       >
         Log session
       </button>
