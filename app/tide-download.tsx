@@ -18,8 +18,23 @@ export default function TideDownload() {
   const [tides, setTides] = useState<any[]>([])
   const [downloadConfirmed, setDownloadConfirmed] = useState(false)
   const [previewLoading, setPreviewLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const href = `/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
+
+  const webcalUrl = typeof window !== "undefined"
+    ? `webcal://${window.location.host}/api/tides?location=Peniche&days=${durationDays}&window=${windowHours}`
+    : ""
+
+  const googleImportUrl = typeof window !== "undefined"
+    ? `https://calendar.google.com/calendar/r/settings/export`
+    : ""
+
+  const copyWebcal = () => {
+    navigator.clipboard.writeText(webcalUrl)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2500)
+  }
 
   const fetchPreview = async () => {
     setPreviewLoading(true)
@@ -178,87 +193,40 @@ export default function TideDownload() {
         </a>
       </div>
 
-      <div style={{ marginTop: "1rem", display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+      <div style={{ marginTop: "1rem" }}>
         <button
           onClick={() => showPreview ? setShowPreview(false) : fetchPreview()}
           disabled={previewLoading}
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0.75rem 1.5rem",
-            borderRadius: "12px",
-            border: "none",
-            background: "var(--surface)",
-            color: "var(--accent)",
-            fontFamily: "var(--font-body)",
-            fontSize: "1rem",
-            fontWeight: 600,
-            textDecoration: "none",
-            minHeight: "3rem",
-            cursor: "pointer",
-            opacity: previewLoading ? 0.6 : 1,
+            fontFamily: "var(--font-mono)", fontSize: "0.7rem", letterSpacing: "0.06em",
+            padding: "0.25rem 0.65rem", borderRadius: "20px",
+            border: "1.5px solid var(--border)", background: "transparent",
+            color: "var(--muted)", cursor: "pointer", opacity: previewLoading ? 0.5 : 1,
           }}
         >
-          {previewLoading ? "Loading..." : showPreview ? "Close" : "Preview"}
+          {previewLoading ? "loading..." : showPreview ? "hide preview" : "preview"}
         </button>
+      </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", color: "var(--muted)", fontSize: "0.85rem", fontFamily: "var(--font-body)" }}>
-          <div style={{ position: "relative" }}>
-            <span 
-              onClick={() => setShowGoogleTip(!showGoogleTip)}
-              onMouseEnter={() => setShowGoogleTip(true)}
-              onMouseLeave={() => setShowGoogleTip(false)}
-              style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
-            >
-              Google Calendar
-            </span>
-            {showGoogleTip && (
-              <div style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                marginTop: "0.5rem",
-                background: "var(--text)",
-                color: "var(--bg)",
-                padding: "0.5rem 0.75rem",
-                borderRadius: "4px",
-                fontSize: "0.75rem",
-                whiteSpace: "nowrap",
-                zIndex: 1000,
-              }}>
-                Settings &gt; Import &amp; Export &gt; Import
-              </div>
-            )}
-          </div>
-          <div style={{ position: "relative" }}>
-            <span 
-              onClick={() => setShowTeamsTip(!showTeamsTip)}
-              onMouseEnter={() => setShowTeamsTip(true)}
-              onMouseLeave={() => setShowTeamsTip(false)}
-              style={{ cursor: "pointer", borderBottom: "1px dotted var(--muted)", userSelect: "none" }}
-            >
-              Microsoft Teams
-            </span>
-            {showTeamsTip && (
-              <div style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                marginTop: "0.5rem",
-                background: "var(--text)",
-                color: "var(--bg)",
-                padding: "0.5rem 0.75rem",
-                borderRadius: "4px",
-                fontSize: "0.75rem",
-                whiteSpace: "nowrap",
-                zIndex: 1000,
-              }}>
-                Calendar app &gt; Import events &gt; select file
-              </div>
-            )}
-          </div>
-        </div>
+      {/* Google Calendar on iPhone */}
+      <div style={{
+        marginTop: "1.25rem", padding: "1rem 1.25rem",
+        background: "var(--surface)", borderRadius: "12px",
+      }}>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 600, color: "var(--text)", margin: "0 0 0.4rem" }}>
+          Add to Google Calendar (iPhone)
+        </p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--muted)", margin: "0 0 0.75rem", lineHeight: 1.5 }}>
+          Copy the link below → open Google Calendar → Other calendars → From URL → paste
+        </p>
+        <button onClick={copyWebcal} style={{
+          fontFamily: "var(--font-body)", fontSize: "0.875rem", fontWeight: 600,
+          padding: "0.5rem 1.25rem", borderRadius: "8px", border: "none",
+          background: copied ? "var(--go)" : "var(--accent)", color: "#fff",
+          cursor: "pointer", transition: "background 0.15s",
+        }}>
+          {copied ? "Copied!" : "Copy subscription link"}
+        </button>
       </div>
 
       {showPreview && (
