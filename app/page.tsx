@@ -1,5 +1,6 @@
 import { runAgent } from "@/lib/agent"
 import FeedbackForm from "./feedback-form"
+import DirectionDiagram from "./direction-diagram"
 export const dynamic = "force-dynamic"
 
 function formatValue(val: string) {
@@ -100,8 +101,19 @@ export default async function Home() {
 
             <section style={{
               marginBottom: "clamp(1.5rem, 4vw, 3rem)",
+              display: "flex",
+              gap: "1.5rem",
+              alignItems: "flex-start",
+              flexWrap: "wrap",
             }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {brief.windDir != null && brief.swellDir != null && (
+                <DirectionDiagram
+                  windDir={brief.windDir}
+                  swellDir={brief.swellDir}
+                  spotFacing={brief.spotFacing}
+                />
+              )}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1, minWidth: "220px" }}>
                 {[
                   { label: "Swell", value: brief.conditions_summary?.swell ?? "--" },
                   { label: "Wind", value: brief.conditions_summary?.wind ?? "--" },

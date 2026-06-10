@@ -284,7 +284,7 @@ ${feedback}
 - negative: bad — say so
 
 ## Your task
-- Write a 3-4 sentence morning brief like texting a surf buddy
+- Write a 3 sentence morning brief like texting a surf buddy
 - Recommend the #1 viable spot and suggest a time window around its best hour
 - Mention the runner-up
 - Calibrate your tone to the absolute score, not just the ranking. If the top score is marginal or poor, say so clearly — don't spin it positively just because it's the best of a bad bunch.
@@ -387,8 +387,13 @@ export async function runAgent() {
 
   const result = JSON.parse(text)
 
+  const topSpot = SPOTS.find((s) => s.name === result.spot)
+
   return {
     ...result,
+    windDir: Math.round(avgWindDir),
+    swellDir: Math.round(avgSwellDir),
+    spotFacing: topSpot?.facing ?? null,
     _debug: {
       viable: viable.map((s) => ({ name: s.name, score: s.score, wind: s.windStatus })),
       eliminated: eliminated.map((s) => ({ name: s.name, reason: s.eliminationReason })),
