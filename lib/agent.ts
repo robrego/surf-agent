@@ -231,10 +231,11 @@ function scoreSpot(spot: SpotProfile, hours: HourConditions[]): SpotScore {
       size = "big"
     }
 
-    // Period
+    // Period — short period is junky, penalise hard
     const periodOk = h.swellPeriod >= spot.periodMin
     if (periodOk) score += 10
-    else score -= 5
+    else if (h.swellPeriod >= spot.periodMin - 2) score -= 10
+    else score -= 25
 
     if (score > bestScore) {
       bestScore = score
@@ -361,6 +362,11 @@ ${feedback}
 - 20–49: marginal — mention it's not ideal
 - 0–19: poor — be honest, probably not worth it
 - negative: bad — say so
+
+## Period rules (hard caps on confidence)
+- Period < 8s: confidence CANNOT be "high" — cap at "medium"
+- Period < 6s: confidence CANNOT be "medium" — cap at "low"
+- Always mention short period in the brief when it degrades the session
 
 ## Your task
 - Write a 2 sentence morning brief like texting a surf buddy
