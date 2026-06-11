@@ -143,7 +143,7 @@ function generateICS(
     "PRODID:-//Surf Agent//Tide Calendar//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    `X-WR-CALNAME:${calName} Windows`,
+    `X-WR-CALNAME:${calName}`,
     "X-WR-TIMEZONE:UTC",
     ...events,
     "END:VCALENDAR",
