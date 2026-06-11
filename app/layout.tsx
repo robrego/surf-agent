@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Syne, DM_Mono, Hanken_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const syne = Syne({
@@ -35,7 +36,10 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${dmMono.variable} ${hanken.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
