@@ -28,8 +28,10 @@ async function findStation(lat: number, lng: number) {
   return nearest
 }
 
-// Returns mid-tide moments: the midpoint in time between each consecutive high/low extreme
-async function getMidTides(lat: number, lng: number, days: number) {
+const isHigh = (e: any) =>
+  String(e.type ?? e.high_or_low ?? e.highLow ?? "").toLowerCase().startsWith("h")
+
+async function getTidePoints(lat: number, lng: number, days: number, tideType: "high" | "mid" | "low") {
   const TidePredictor = (await import("@neaps/tide-predictor")).default
 
   const station = await findStation(lat, lng)
@@ -47,17 +49,24 @@ async function getMidTides(lat: number, lng: number, days: number) {
   const extremes: any[] = TidePredictor(constituents).getExtremesPrediction({ start, end })
   extremes.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
 
-  const midTides: { time: Date }[] = []
+  if (tideType === "high") {
+    return extremes.filter(isHigh).map(e => ({ time: new Date(e.time) }))
+  }
+
+  if (tideType === "low") {
+    return extremes.filter(e => !isHigh(e)).map(e => ({ time: new Date(e.time) }))
+  }
+
+  // mid: midpoint between consecutive extremes
+  const points: { time: Date }[] = []
   for (let i = 0; i < extremes.length - 1; i++) {
     const t1 = new Date(extremes[i].time).getTime()
     const t2 = new Date(extremes[i + 1].time).getTime()
-    midTides.push({ time: new Date((t1 + t2) / 2) })
+    points.push({ time: new Date((t1 + t2) / 2) })
   }
-
-  return midTides
+  return points
 }
 
-// Sunrise/sunset via the standard solar position algorithm
 function sunTimes(date: Date, lat: number, lng: number): { rise: Date; set: Date } | null {
   const toRad = (d: number) => (d * Math.PI) / 180
   const toDeg = (r: number) => (r * 180) / Math.PI
@@ -76,7 +85,7 @@ function sunTimes(date: Date, lat: number, lng: number): { rise: Date; set: Date
   const cosDec = Math.cos(Math.asin(sinDec))
   const cosH = (Math.sin(toRad(-0.833)) - Math.sin(toRad(lat)) * sinDec) / (Math.cos(toRad(lat)) * cosDec)
 
-  if (cosH < -1 || cosH > 1) return null // polar day/night
+  if (cosH < -1 || cosH > 1) return null
 
   const H = toDeg(Math.acos(cosH))
   const toDate = (jd: number) => new Date((jd - 2440587.5) * 86400000)
@@ -84,7 +93,14 @@ function sunTimes(date: Date, lat: number, lng: number): { rise: Date; set: Date
   return { rise: toDate(Jtransit - H / 360), set: toDate(Jtransit + H / 360) }
 }
 
-function generateICS(midTides: { time: Date }[], windowHours: number, lat: number, lng: number, location: string) {
+function generateICS(
+  points: { time: Date }[],
+  slotHours: number,
+  lat: number,
+  lng: number,
+  location: string,
+  tideType: string,
+) {
   const pad = (n: number) => String(n).padStart(2, "0")
   const formatDate = (d: Date) =>
     d.getUTCFullYear() +
@@ -94,18 +110,20 @@ function generateICS(midTides: { time: Date }[], windowHours: number, lat: numbe
     pad(d.getUTCMinutes()) +
     "00Z"
 
-  const ms = windowHours * 3600000
+  // slotHours is total duration; split evenly around the tide point
+  const halfMs = (slotHours / 2) * 3600000
+  const calName = tideType === "high" ? "High Tide" : tideType === "low" ? "Low Tide" : "Mid Tide"
   const events: string[] = []
 
-  for (const tide of midTides) {
-    const rawStart = new Date(tide.time.getTime() - ms)
-    const rawEnd   = new Date(tide.time.getTime() + ms)
+  for (const point of points) {
+    const rawStart = new Date(point.time.getTime() - halfMs)
+    const rawEnd   = new Date(point.time.getTime() + halfMs)
 
-    const sun = sunTimes(tide.time, lat, lng)
+    const sun = sunTimes(point.time, lat, lng)
     const start = sun ? new Date(Math.max(rawStart.getTime(), sun.rise.getTime())) : rawStart
     const end   = sun ? new Date(Math.min(rawEnd.getTime(),   sun.set.getTime()))  : rawEnd
 
-    if (start >= end) continue // entirely outside daylight
+    if (start >= end) continue
 
     events.push([
       "BEGIN:VEVENT",
@@ -114,7 +132,7 @@ function generateICS(midTides: { time: Date }[], windowHours: number, lat: numbe
       `SUMMARY:Busy`,
       "STATUS:CONFIRMED",
       "TRANSP:OPAQUE",
-      `UID:midtide-${formatDate(tide.time)}@surf-agent`,
+      `UID:tide-${tideType}-${formatDate(point.time)}@surf-agent`,
       "END:VEVENT",
     ].join("\r\n"))
   }
@@ -125,7 +143,7 @@ function generateICS(midTides: { time: Date }[], windowHours: number, lat: numbe
     "PRODID:-//Surf Agent//Tide Calendar//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:Mid Tide Windows",
+    `X-WR-CALNAME:${calName} Windows`,
     "X-WR-TIMEZONE:UTC",
     ...events,
     "END:VCALENDAR",
@@ -135,8 +153,9 @@ function generateICS(midTides: { time: Date }[], windowHours: number, lat: numbe
 export async function GET(request: Request) {
   const url = new URL(request.url)
   const location = url.searchParams.get("location") || "Peniche"
-  const days = Math.min(parseInt(url.searchParams.get("days") || "7"), 30)
-  const window = parseFloat(url.searchParams.get("window") || "1")
+  const days = Math.min(parseInt(url.searchParams.get("days") || "7"), 365)
+  const slot = parseFloat(url.searchParams.get("slot") || "1")
+  const tideType = (url.searchParams.get("tide") || "mid") as "high" | "mid" | "low"
 
   const locations: Record<string, { lat: number; lng: number }> = {
     peniche:    { lat: 39.36, lng: -9.38 },
@@ -156,13 +175,13 @@ export async function GET(request: Request) {
   const coords = locations[location.toLowerCase()] ?? locations.peniche
 
   try {
-    const midTides = await getMidTides(coords.lat, coords.lng, days)
-    const ics = generateICS(midTides, window, coords.lat, coords.lng, location)
+    const points = await getTidePoints(coords.lat, coords.lng, days, tideType)
+    const ics = generateICS(points, slot, coords.lat, coords.lng, location, tideType)
 
     return new NextResponse(ics, {
       headers: {
         "Content-Type": "text/calendar; charset=utf-8",
-        "Content-Disposition": `attachment; filename="tides-${location.toLowerCase()}.ics"`,
+        "Content-Disposition": `attachment; filename="tides.ics"`,
         "Cache-Control": "public, max-age=3600",
       },
     })

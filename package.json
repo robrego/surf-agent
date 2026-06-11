@@ -10,20 +10,20 @@
   "dependencies": {
     "@neaps/tide-database": "^0.7.20260601",
     "@neaps/tide-predictor": "^0.9.0",
+    "@tailwindcss/postcss": "^4",
     "@types/leaflet": "^1.9.21",
     "@vercel/analytics": "^2.0.1",
     "leaflet": "^1.9.4",
     "next": "^15.5.19",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "tailwindcss": "^4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

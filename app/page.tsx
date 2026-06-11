@@ -183,7 +183,7 @@ export default async function Home({
               conditionsSummary={brief.conditions_summary}
             />
 
-            <TideDownload />
+            <TideDownload location={location.id} />
           </>
         ) : null}
 

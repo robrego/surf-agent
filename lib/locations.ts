@@ -44,7 +44,7 @@ export const LOCATIONS: Location[] = [
     mapCenter: [39.01, -9.42],
     mapZoom: 12,
     spots: [
-      { name: "Ribeira d'Ilhas", facing: 280, swellDirMin: 260, swellDirMax: 320, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 140, periodMin: 9, tide: "all tides", notes: "Classic right point. WST event spot. E/SE offshore. Long walls." },
+      { name: "Ribeira d'Ilhas", facing: 250, swellDirMin: 260, swellDirMax: 320, swellMin: 0.8, swellMax: 2.5, offshoreWindMin: 60, offshoreWindMax: 140, periodMin: 9, tide: "all tides", notes: "Classic right point. WST event spot. ENE/E offshore. N wind is cross-offshore for the right — works well. Long walls." },
       { name: "Coxos", facing: 275, swellDirMin: 260, swellDirMax: 310, swellMin: 1.2, swellMax: 3.5, offshoreWindMin: 70, offshoreWindMax: 130, periodMin: 11, tide: "mid to high", notes: "Heavy reef right. One of Europe's best. Needs real swell. Experts only." },
       { name: "Crazy Left", facing: 270, swellDirMin: 250, swellDirMax: 310, swellMin: 1.0, swellMax: 3.0, offshoreWindMin: 60, offshoreWindMax: 120, periodMin: 10, tide: "mid", notes: "Long left reef. Power and length. ENE offshore." },
       { name: "Pedra Branca", facing: 260, swellDirMin: 240, swellDirMax: 300, swellMin: 1.0, swellMax: 2.5, offshoreWindMin: 50, offshoreWindMax: 110, periodMin: 9, tide: "mid", notes: "Reef break. Consistent. Works on most W swells." },
