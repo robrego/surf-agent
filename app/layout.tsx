@@ -22,8 +22,8 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Peniche Surf Check",
-  description: "Daily surf brief for Peniche",
+  title: "Surf Check",
+  description: "Daily surf briefs for your favourite spots",
 };
 
 export default function RootLayout({
