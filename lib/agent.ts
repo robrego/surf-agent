@@ -1,6 +1,27 @@
+import * as fs from "fs/promises"
 import type { SpotProfile } from "./spots"
 import { getLocation } from "./locations"
 import { getSessions, buildFeedbackContext } from "./feedback"
+
+// ---- WIND CACHE ----
+
+const WIND_CACHE_PATH = "/tmp/surf-wind-cache.json"
+
+async function readWindCache(): Promise<Record<string, { data: any; ts: number }> | null> {
+  try {
+    return JSON.parse(await fs.readFile(WIND_CACHE_PATH, "utf-8"))
+  } catch {
+    return null
+  }
+}
+
+async function saveWindCache(key: string, data: any) {
+  try {
+    const existing = (await readWindCache()) ?? {}
+    existing[key] = { data, ts: Date.now() }
+    await fs.writeFile(WIND_CACHE_PATH, JSON.stringify(existing))
+  } catch {}
+}
 
 // ---- DATA FETCHING ----
 
@@ -14,21 +35,81 @@ export async function fetchMarineData(lat: number, lng: number) {
   )
   url.searchParams.set("timezone", "Europe/Lisbon")
   url.searchParams.set("forecast_days", "2")
-  const res = await fetch(url.toString())
+  const res = await fetch(url.toString(), { signal: AbortSignal.timeout(10000) })
   if (!res.ok) throw new Error(`Marine API error: ${res.status}`)
   return res.json()
 }
 
+async function fetchWindFromWWO(lat: number, lng: number) {
+  const apiKey = process.env.WWO_API_KEY
+  if (!apiKey) throw new Error("WWO_API_KEY not set")
+
+  const url = new URL("https://api.worldweatheronline.com/premium/v1/marine.ashx")
+  url.searchParams.set("key", apiKey)
+  url.searchParams.set("q", `${lat},${lng}`)
+  url.searchParams.set("format", "json")
+  url.searchParams.set("tide", "no")
+  url.searchParams.set("tp", "1")
+  url.searchParams.set("num_of_days", "2")
+
+  const res = await fetch(url.toString(), { signal: AbortSignal.timeout(10000) })
+  if (!res.ok) throw new Error(`WWO error: ${res.status}`)
+  const json = await res.json()
+
+  const wind_speed_10m: number[] = []
+  const wind_direction_10m: number[] = []
+  const wind_gusts_10m: number[] = []
+
+  for (const day of json.data.weather) {
+    for (const h of day.hourly) {
+      wind_speed_10m.push(parseFloat(h.windspeedKmph))
+      wind_direction_10m.push(parseFloat(h.winddirDegree))
+      wind_gusts_10m.push(parseFloat(h.WindGustKmph))
+    }
+  }
+
+  return { hourly: { wind_speed_10m, wind_direction_10m, wind_gusts_10m } }
+}
+
 export async function fetchWeatherData(lat: number, lng: number) {
-  const url = new URL("https://api.open-meteo.com/v1/forecast")
-  url.searchParams.set("latitude", String(lat))
-  url.searchParams.set("longitude", String(lng))
-  url.searchParams.set("hourly", "wind_speed_10m,wind_direction_10m,wind_gusts_10m")
-  url.searchParams.set("timezone", "auto")
-  url.searchParams.set("forecast_days", "2")
-  const res = await fetch(url.toString())
-  if (!res.ok) throw new Error(`Weather API error: ${res.status}`)
-  return res.json()
+  const cacheKey = `${lat},${lng}`
+
+  // 1. Try WWO (primary when key is set)
+  if (process.env.WWO_API_KEY) {
+    try {
+      const data = await fetchWindFromWWO(lat, lng)
+      void saveWindCache(cacheKey, data)
+      return data
+    } catch (e) {
+      console.warn("WWO failed:", e)
+    }
+  }
+
+  // 2. Try Open-Meteo
+  try {
+    const url = new URL("https://api.open-meteo.com/v1/forecast")
+    url.searchParams.set("latitude", String(lat))
+    url.searchParams.set("longitude", String(lng))
+    url.searchParams.set("hourly", "wind_speed_10m,wind_direction_10m,wind_gusts_10m")
+    url.searchParams.set("timezone", "auto")
+    url.searchParams.set("forecast_days", "2")
+    const res = await fetch(url.toString(), { signal: AbortSignal.timeout(10000) })
+    if (!res.ok) throw new Error(`Weather API error: ${res.status}`)
+    const data = await res.json()
+    void saveWindCache(cacheKey, data)
+    return data
+  } catch (e) {
+    console.warn("Open-Meteo weather failed:", e)
+  }
+
+  // 3. Stale cache
+  const cache = await readWindCache()
+  if (cache?.[cacheKey]) {
+    console.warn("Using stale wind cache for", cacheKey)
+    return cache[cacheKey].data
+  }
+
+  throw new Error("All wind sources unavailable and no cached data")
 }
 
 // ---- GEOMETRY ----
@@ -49,7 +130,7 @@ function windRelation(
 
   if (diff <= 30) return "offshore"
   if (diff <= 75) return "cross-offshore"
-  if (diff <= 120) return "cross-onshore"
+  if (diff <= 90) return "cross-onshore"
   return "onshore"
 }
 
@@ -169,16 +250,16 @@ function scoreSpot(spot: SpotProfile, hours: HourConditions[]): SpotScore {
   let eliminated = false
   let eliminationReason: string | null = null
 
-  // Eliminate if onshore OR cross-onshore with strong wind for most of the day
+  // Onshore or cross-onshore >= 20 km/h for >33% of daylight hours = blown out
   const badWindHours = hours.filter((h) => {
     const w = windRelation(h.windDir, spot.facing)
-    return (w === "onshore" || w === "cross-onshore") && h.windSpeed > 20
+    return (w === "onshore" || w === "cross-onshore") && h.windSpeed >= 20
   }).length
 
   if (badWindHours > hours.length * 0.5) {
     eliminated = true
     const avgSpeed = Math.round(hours.reduce((s, h) => s + h.windSpeed, 0) / hours.length)
-    const w = windRelation(hours[0].windDir, spot.facing)
+    const w = windRelation(hours[Math.floor(hours.length / 2)].windDir, spot.facing)
     eliminationReason = `${w} wind ~${avgSpeed}km/h most of the day`
   }
 

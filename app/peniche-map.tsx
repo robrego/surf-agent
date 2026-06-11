@@ -87,16 +87,16 @@ export default function PenicheMap({
           style={{ position: "absolute", inset: 0, width: SIZE, height: SIZE, pointerEvents: "none", zIndex: 800 }}
         >
           {/* Swell: blue */}
-          <path d={swell.shaft} stroke="white" strokeWidth="5" strokeLinecap="round" fill="none" />
-          <polygon points={swell.head} fill="white" stroke="white" strokeWidth="4" strokeLinejoin="round" />
-          <path d={swell.shaft} stroke="#1d4ed8" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+          <path d={swell.shaft} stroke="white" strokeWidth="8" strokeLinecap="round" fill="none" />
+          <polygon points={swell.head} fill="white" stroke="white" strokeWidth="6" strokeLinejoin="round" />
+          <path d={swell.shaft} stroke="#1d4ed8" strokeWidth="4" strokeLinecap="round" fill="none" />
           <polygon points={swell.head} fill="#1d4ed8" />
 
-          {/* Wind: black */}
-          <path d={wind.shaft} stroke="white" strokeWidth="5" strokeLinecap="round" fill="none" />
-          <polygon points={wind.head} fill="white" stroke="white" strokeWidth="4" strokeLinejoin="round" />
-          <path d={wind.shaft} stroke="#111" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          <polygon points={wind.head} fill="#111" />
+          {/* Wind: purple */}
+          <path d={wind.shaft} stroke="white" strokeWidth="8" strokeLinecap="round" fill="none" />
+          <polygon points={wind.head} fill="white" stroke="white" strokeWidth="6" strokeLinejoin="round" />
+          <path d={wind.shaft} stroke="#7c3aed" strokeWidth="4" strokeLinecap="round" fill="none" />
+          <polygon points={wind.head} fill="#7c3aed" />
 
           {/* Bearing labels */}
           <text x={slx} y={sly} textAnchor="middle" dominantBaseline="middle"
@@ -106,7 +106,7 @@ export default function PenicheMap({
           </text>
           <text x={wlx} y={wly} textAnchor="middle" dominantBaseline="middle"
             fontSize="7.5" fontWeight="700" fontFamily="monospace"
-            stroke="white" strokeWidth="3" paintOrder="stroke" fill="#111">
+            stroke="white" strokeWidth="3" paintOrder="stroke" fill="#7c3aed">
             {bearing(windDir)}
           </text>
 

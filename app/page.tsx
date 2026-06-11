@@ -128,7 +128,7 @@ export default async function Home({
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", flex: 1, minWidth: "220px" }}>
                 {[
                   { label: "Swell", value: brief.conditions_summary?.swell ?? "--", dot: "#1d4ed8" },
-                  { label: "Wind", value: brief.conditions_summary?.wind ?? "--", dot: "#111" },
+                  { label: "Wind", value: brief.conditions_summary?.wind ?? "--", dot: "#7c3aed" },
                   { label: "Window", value: brief.conditions_summary?.best_window ?? "--", dot: null },
                 ].map(({ label, value, dot }) => (
                   <div key={label} style={{
